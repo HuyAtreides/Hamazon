@@ -1,0 +1,10 @@
+.register {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  color: var(--faint-dark-color);
+}
+
+.register__link {
+  text-decoration: none;
+  font-weight: 700;
+}

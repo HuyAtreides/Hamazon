@@ -1,0 +1,19 @@
+@import './variables.css';
+@import './utils.css';
+
+html,
+body {
+  height: 100%;
+  font-size: var(--font-size);
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}

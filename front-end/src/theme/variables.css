@@ -1,0 +1,8 @@
+:root {
+  --secondary-text-color: white;
+  --font-size: 12px;
+  --faint-light-color: #e4e7eb;
+  --primary-color: #495665;
+  --faint-color: #d5e3de;
+  --faint-dark-color: hsl(0, 0%, 40%);
+}

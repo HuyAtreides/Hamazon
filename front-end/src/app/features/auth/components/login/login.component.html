@@ -1,0 +1,20 @@
+<div class="form-container">
+  <h1>Login</h1>
+  <form class="form">
+    <mat-form-field appearance="standard">
+      <mat-label>Username or Email</mat-label>
+      <input matInput required />
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Password</mat-label>
+      <input matInput required type="password" />
+      <button matSuffix mat-icon-button>
+        <mat-icon> visibility </mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </form>
+  <p class="register">
+    NEW TO HAMAZON? <a routerLink="/auth/register" class="register__link">REGISTER</a>
+  </p>
+</div>
