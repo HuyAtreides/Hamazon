@@ -1,25 +1,59 @@
 <div class="form-container">
   <h1>Register</h1>
-  <form class="form">
+  <form class="form" [formGroup]="registerForm" (ngSubmit)="handleSubmit()">
     <mat-form-field appearance="standard">
       <mat-label>Username</mat-label>
-      <input matInput required />
+      <input matInput formControlName="username" />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="getControl('username')"
+        ></app-form-control-validation-message>
+      </mat-error>
+      <mat-hint>Username should contains only letters, numbers and underscore.</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Email</mat-label>
-      <input matInput required />
+      <input matInput formControlName="email" />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="getControl('email')"
+        ></app-form-control-validation-message>
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Password</mat-label>
-      <input matInput required />
+      <input matInput formControlName="password" type="password" />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="getControl('password')"
+        ></app-form-control-validation-message>
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Confirm Password</mat-label>
-      <input matInput required />
-      <button matSuffix mat-icon-button>
-        <mat-icon> visibility </mat-icon>
+      <input matInput formControlName="confirmPassword" [type]="passwordInputType" />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="getControl('confirmPassword')"
+        ></app-form-control-validation-message>
+      </mat-error>
+      <button
+        matSuffix
+        mat-icon-button
+        title="Show Password"
+        (click)="togglePasswordVisibility()"
+        type="button"
+      >
+        <mat-icon>{{ passwordIconType }}</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <button mat-raised-button color="primary" type="submit" class="submit-button">
+      <ng-container *ngIf="(isSubmitting$ | async) === false; else spinner">
+        Submit
+      </ng-container>
+      <ng-template #spinner>
+        <mat-spinner color="accent" [diameter]="33"></mat-spinner>
+      </ng-template>
+    </button>
   </form>
 </div>

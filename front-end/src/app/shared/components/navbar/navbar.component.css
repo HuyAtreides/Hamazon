@@ -1,0 +1,19 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.brand {
+  font-size: 2rem;
+  color: inherit;
+  font-weight: bold;
+}
+
+.username {
+  color: inherit;
+  font-size: 1.5rem;
+  margin: 0 7px;
+}
+
+.home-button {
+  margin-right: 10px;
+}

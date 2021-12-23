@@ -1,0 +1,13 @@
+<nav>
+  <mat-toolbar color="primary">
+    <a routerLink="/books" class="brand">Hamazon</a>
+    <span class="spacer"></span>
+    <mat-icon>account_circle</mat-icon>
+    <p class="username">Hello, Huy</p>
+    <a mat-raised-button color="accent" class="home-button">Home</a>
+    <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    <a routerLink="" mat-icon-button title="Shopping Cart">
+      <mat-icon [matBadge]="'9+'" matBadgeColor="accent">shopping_cart</mat-icon>
+    </a>
+  </mat-toolbar>
+</nav>

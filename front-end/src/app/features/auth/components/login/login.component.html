@@ -1,18 +1,43 @@
 <div class="form-container">
   <h1>Login</h1>
-  <form class="form">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
     <mat-form-field appearance="standard">
-      <mat-label>Username or Email</mat-label>
-      <input matInput required />
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="getControl('username')"
+        ></app-form-control-validation-message>
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Password</mat-label>
-      <input matInput required type="password" />
-      <button matSuffix mat-icon-button>
-        <mat-icon> visibility </mat-icon>
+      <input matInput formControlName="password" [type]="passwordInputType" />
+      <button
+        matSuffix
+        mat-icon-button
+        title="Show Password"
+        (click)="togglePasswordVisibility()"
+        type="button"
+      >
+        <mat-icon>
+          {{ passwordIconType }}
+        </mat-icon>
       </button>
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="getControl('password')"
+        ></app-form-control-validation-message>
+      </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <button mat-raised-button color="primary" type="submit" class="submit-button">
+      <ng-container *ngIf="(isSubmitting$ | async) === false; else spinner">
+        Submit
+      </ng-container>
+      <ng-template #spinner>
+        <mat-spinner color="accent" [diameter]="33"></mat-spinner>
+      </ng-template>
+    </button>
   </form>
   <p class="register">
     NEW TO HAMAZON? <a routerLink="/auth/register" class="register__link">REGISTER</a>

@@ -3,6 +3,7 @@
 
 html,
 body {
+  min-width: 900px;
   height: 100%;
   font-size: var(--font-size);
 }
@@ -16,4 +17,12 @@ body {
 *::after,
 *::before {
   box-sizing: border-box;
+}
+
+.error-message {
+  color: var(--error-font-color);
+}
+
+a {
+  text-decoration: none;
 }

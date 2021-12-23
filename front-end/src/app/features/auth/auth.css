@@ -8,6 +8,13 @@
   align-items: center;
 }
 
+.submit-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 2px;
+}
+
 .form {
   width: 30%;
   display: flex;
