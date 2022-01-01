@@ -1,0 +1,44 @@
+<mat-list>
+  <div mat-subheader>Search Books</div>
+  <mat-list-item class="form-item">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Enter title, author or ISBN" type="search" />
+      <button mat-icon-button matSuffix type="button" title="Start Searching">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <div mat-subheader>Published Date</div>
+  <mat-list-item class="form-item">
+    <mat-form-field appearance="standard">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+        <input matStartDate formControlName="start" placeholder="Start date" />
+        <input matEndDate formControlName="end" placeholder="End date" />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="range.controls.start"
+          *ngIf="range.controls.start.invalid; else elseBlock"
+        ></app-form-control-validation-message>
+
+        <ng-template #elseBlock>
+          <app-form-control-validation-message
+            [control]="range.controls.end"
+          ></app-form-control-validation-message>
+        </ng-template>
+      </mat-error>
+    </mat-form-field>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <div mat-subheader>Genres</div>
+  <mat-selection-list [multiple]="false">
+    <mat-list-option *ngFor="let genre of GENRES" [value]="genre">
+      {{ genre }}
+    </mat-list-option>
+  </mat-selection-list>
+</mat-list>

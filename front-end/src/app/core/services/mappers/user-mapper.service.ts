@@ -5,7 +5,7 @@ import { UserDto } from '../dtos/user-dto';
 
 import { IMapperFromDto } from './mapper';
 
-/** Map user from domain model to DTO. */
+/** User mapper. */
 @Injectable({
   providedIn: 'root',
 })

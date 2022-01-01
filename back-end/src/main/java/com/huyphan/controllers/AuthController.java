@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.huyphan.dtos.LoginDataDto;
 import com.huyphan.dtos.RegisterDataDto;
 import com.huyphan.dtos.TokenDto;
 import com.huyphan.dtos.UserDto;
-import com.huyphan.models.AppError;
+import com.huyphan.models.AppException;
 import com.huyphan.models.User;
 import com.huyphan.services.AuthService;
 import com.huyphan.services.JwtService;
@@ -34,7 +33,7 @@ public class AuthController {
 	/**
 	 * Handles login.
 	 * 
-	 * @param loginDataDto. Data required for login.
+	 * @param loginDataDto Data required for login.
 	 */
 	@PostMapping("/login")
 	public TokenDto login(@RequestBody LoginDataDto loginDataDto) {
@@ -47,11 +46,11 @@ public class AuthController {
 	/**
 	 * Register new user.
 	 * 
-	 * @param registerDataDto. Data required for register.
-	 * @throws AppError
+	 * @param registerDataDto Data required for register.
+	 * @throws AppException
 	 */
 	@PostMapping("/register")
-	public TokenDto register(@RequestBody RegisterDataDto registerDataDto) throws AppError {
+	public TokenDto register(@RequestBody RegisterDataDto registerDataDto) throws AppException {
 		User user = userService.register(registerDataDto);
 		TokenDto tokenDto = jwtService.generateToken(user);
 
@@ -67,7 +66,7 @@ public class AuthController {
 	/**
 	 * Refresh token.
 	 * 
-	 * @param expiredTokenDto. Expired token.
+	 * @param expiredTokenDto Expired token.
 	 */
 	@PostMapping("/refresh-token")
 	public TokenDto refreshToken(@RequestBody TokenDto expiredTokenDto) {

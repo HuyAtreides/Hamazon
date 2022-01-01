@@ -3,7 +3,7 @@
   <form class="form" [formGroup]="registerForm" (ngSubmit)="handleSubmit()">
     <mat-form-field appearance="standard">
       <mat-label>Username</mat-label>
-      <input matInput formControlName="username" />
+      <input matInput formControlName="username" type="text" />
       <mat-error>
         <app-form-control-validation-message
           [control]="getControl('username')"
@@ -13,7 +13,7 @@
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email" />
+      <input matInput formControlName="email" type="text" />
       <mat-error>
         <app-form-control-validation-message
           [control]="getControl('email')"

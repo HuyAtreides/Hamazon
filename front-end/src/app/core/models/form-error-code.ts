@@ -41,6 +41,21 @@ export enum ValidationErrorCode {
    * Pattern restriction.
    */
   Pattern = 'pattern',
+
+  /**
+   * Invalid date range's start date.
+   */
+  InvalidStartDate = 'matStartDateInvalid',
+
+  /**
+   * Invalid date range's start date.
+   */
+  InvalidEndDate = 'matEndDateInvalid',
+
+  /**
+   * Invalid date range.
+   */
+  InvalidDateRange = 'matDatepickerParse',
 }
 
 /**

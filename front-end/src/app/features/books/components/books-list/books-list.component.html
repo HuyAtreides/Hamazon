@@ -1,0 +1,121 @@
+<app-books-sidebar></app-books-sidebar>
+<div class="books-list-container">
+  <h2 class="header">Book List</h2>
+  <mat-divider></mat-divider>
+  <!-- <p class="empty-books-list-placeholder">No Books Found :((</p> -->
+  <ul class="books-list">
+    <li class="books-list__item">
+      <mat-card>
+        <img
+          mat-card-image
+          src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1415428227l/20518872.jpg"
+          alt="Book avatar"
+        />
+        <mat-card-header>
+          <mat-card-title>The three-body problem</mat-card-title>
+          <mat-card-subtitle>Liu Cixin</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="book-price">$17.00</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button color="primary">Details</button>
+        </mat-card-actions>
+      </mat-card>
+    </li>
+    <li class="books-list__item">
+      <mat-card>
+        <img
+          mat-card-image
+          src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1415428227l/20518872.jpg"
+          alt="Book avatar"
+        />
+        <mat-card-header>
+          <mat-card-title>The three-body problem</mat-card-title>
+          <mat-card-subtitle>Liu Cixin</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="book-price">$17.00</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button color="primary">Details</button>
+        </mat-card-actions>
+      </mat-card>
+    </li>
+    <li class="books-list__item">
+      <mat-card>
+        <img
+          mat-card-image
+          src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1415428227l/20518872.jpg"
+          alt="Book avatar"
+        />
+        <mat-card-header>
+          <mat-card-title>The three-body problem</mat-card-title>
+          <mat-card-subtitle>Liu Cixin</mat-card-subtitle> </mat-card-header
+        ><mat-card-content>
+          <p class="book-price">$17.00</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button color="primary">Details</button>
+        </mat-card-actions>
+      </mat-card>
+    </li>
+    <li class="books-list__item">
+      <mat-card>
+        <img
+          mat-card-image
+          src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1415428227l/20518872.jpg"
+          alt="Book avatar"
+        />
+        <mat-card-header>
+          <mat-card-title>The three-body problem</mat-card-title>
+          <mat-card-subtitle>Liu Cixin</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="book-price">$17.00</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button color="primary">Details</button>
+        </mat-card-actions>
+      </mat-card>
+    </li>
+    <li class="books-list__item">
+      <mat-card>
+        <img
+          mat-card-image
+          src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1415428227l/20518872.jpg"
+          alt="Book avatar"
+        />
+        <mat-card-header>
+          <mat-card-title>The three-body problem</mat-card-title>
+          <mat-card-subtitle>Liu Cixin</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="book-price">$17.00</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button color="primary">Details</button>
+        </mat-card-actions>
+      </mat-card>
+    </li>
+    <!-- <ng-container>
+    <div class="blur-background"></div>
+    <div class="absolute-spinner-container">
+      <mat-spinner color="primary"></mat-spinner>
+    </div>
+  </ng-container> -->
+  </ul>
+
+  <!-- <div class="spinner-container">
+  <div class="center-spinner">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+</div> -->
+  <mat-paginator
+    [length]="100"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25]"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>

@@ -5,7 +5,7 @@ import { TokenDto } from '../dtos/token-dto';
 
 import { IMapperFromDto, IMapperToDto } from './mapper';
 
-/** Map token from domain model to dto. */
+/** Token mapper. */
 @Injectable({
   providedIn: 'root',
 })

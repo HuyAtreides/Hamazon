@@ -3,12 +3,9 @@ package com.huyphan.utils;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.huyphan.models.User;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -36,7 +33,7 @@ public class JwtUtil {
 	/**
 	 * Generate JWT
 	 * 
-	 * @param user. User info.
+	 * @param user User info.
 	 */
 	public String generateToken(User user) {
 		String username = user.getUsername();
@@ -46,12 +43,8 @@ public class JwtUtil {
 		calendar.add(Calendar.DATE, expirationDate);
 		Date expiredDate = calendar.getTime();
 		Key key = getSigningKey();
-		return Jwts.builder()
-				.setSubject(username)
-				.setIssuedAt(issueDate)
-				.setExpiration(expiredDate)
-				.signWith(key)
-				.compact();
+		return Jwts.builder().setSubject(username).setIssuedAt(issueDate).setExpiration(expiredDate)
+				.signWith(key).compact();
 	}
 
 	/** Validate token. */
@@ -73,15 +66,12 @@ public class JwtUtil {
 	/**
 	 * Parse token.
 	 * 
-	 * @param token. Token to parse.
+	 * @param token Token to parse.
 	 */
 	private Claims parseToken(String token) {
 		try {
 			Key signingKey = getSigningKey();
-			return Jwts.parserBuilder()
-					.setSigningKey(signingKey)
-					.build()
-					.parseClaimsJws(token)
+			return Jwts.parserBuilder().setSigningKey(signingKey).build().parseClaimsJws(token)
 					.getBody();
 		} catch (JwtException jwtException) {
 			throw jwtException;
@@ -91,7 +81,7 @@ public class JwtUtil {
 	/**
 	 * Parse expired token. Accept expired jwt exception.
 	 * 
-	 * @param token. Token to parse.
+	 * @param token Token to parse.
 	 */
 	public Claims parseExpiredToken(String token) {
 		try {

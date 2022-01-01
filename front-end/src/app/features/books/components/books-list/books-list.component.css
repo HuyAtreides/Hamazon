@@ -1,0 +1,54 @@
+:host {
+  display: flex;
+}
+
+.header {
+  font-size: 2.5rem;
+  margin: 0;
+  padding: 16px;
+}
+
+.books-list-container {
+  border-left: 1px solid var(--faint-color);
+  flex-grow: 1;
+  color: var(--primary-color);
+  justify-content: center;
+  align-items: center;
+}
+
+.books-list {
+  position: relative;
+  min-height: 450px;
+  max-height: 770px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style: none;
+  margin-left: 25px;
+  margin-right: 25px;
+  padding: 0;
+}
+
+.books-list__item {
+  margin: 10px 10px 5px 10px;
+  width: 18%;
+  min-width: 165px;
+}
+
+.book-price {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.empty-books-list-placeholder {
+  font-size: 3rem;
+  font-weight: bolder;
+  font-style: italic;
+  text-align: center;
+  margin-top: 25px;
+}
+
+.spinner-container {
+  height: 450px;
+}

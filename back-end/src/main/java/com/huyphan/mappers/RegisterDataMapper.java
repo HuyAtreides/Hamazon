@@ -14,7 +14,7 @@ public class RegisterDataMapper implements FromDtoMapper<RegisterDataDto, Regist
 	@Autowired
 	private ModelMapper modelMapper;
 
-	/** {@inheritDoc} */
+	/** @see FromDtoMapper#fromDto(Object) */
 	@Override
 	public RegisterData fromDto(RegisterDataDto data) {
 		return modelMapper.map(data, RegisterData.class);

@@ -1,7 +1,6 @@
 package com.huyphan.services;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,13 +8,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.huyphan.dao.UserDao;
 import com.huyphan.dtos.RegisterDataDto;
 import com.huyphan.dtos.UserDto;
 import com.huyphan.mappers.RegisterDataMapper;
 import com.huyphan.mappers.UserMapper;
-import com.huyphan.models.AppError;
+import com.huyphan.models.AppException;
 import com.huyphan.models.RegisterData;
 import com.huyphan.models.User;
 
@@ -38,7 +36,7 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Load user info by user name.
 	 * 
-	 * @param username. Username used to find user.
+	 * @param username Username used to find user.
 	 */
 	@Override
 	public User loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -53,10 +51,10 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Register new user.
 	 * 
-	 * @param newUser. New user to register
-	 * @throws AppError
+	 * @param newUser New user.
+	 * @throws AppException
 	 */
-	public User register(RegisterDataDto registerDataDto) throws AppError {
+	public User register(RegisterDataDto registerDataDto) throws AppException {
 		RegisterData registerData = registerDataMapper.fromDto(registerDataDto);
 		String username = registerData.getUsername();
 		String email = registerData.getEmail();
@@ -65,10 +63,10 @@ public class UserService implements UserDetailsService {
 		newUser.setEmail(email);
 		newUser.setPassword(password);
 		newUser.setUsername(username);
-		User user = userDao.findByUsernameOrEmail(username, email);
+		Optional<User> optionalUser = userDao.findByUsernameOrEmail(username, email);
 
-		if (user != null) {
-			throw new AppError("Username or Email is already taken");
+		if (optionalUser.isPresent()) {
+			throw new AppException("Username or Email is taken");
 		}
 
 		String encryptedPassword = passwordEncoder.encode(password);

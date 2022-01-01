@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { concat, defer, Observable, of, race, ReplaySubject } from 'rxjs';
 import { distinctUntilChanged, map, shareReplay, switchMap } from 'rxjs/operators';
 
@@ -9,7 +10,7 @@ import { User } from '../models/user';
 import { AppConfigService } from './app-config.service';
 import { UserDto } from './dtos/user-dto';
 import { LocalStorageService } from './local-storage.service';
-import { UserMapperService } from './mapper/user-mapper.service';
+import { UserMapperService } from './mappers/user-mapper.service';
 
 /**
  * Stateful service for storing/managing data about the current user.
@@ -34,6 +35,7 @@ export class UserService {
     private readonly appConfig: AppConfigService,
     private readonly userMapper: UserMapperService,
     private readonly http: HttpClient,
+    private readonly router: Router,
     private readonly localStorageService: LocalStorageService,
   ) {
     this.userUrl = new URL('auth/user', this.appConfig.apiUrl);
@@ -41,18 +43,25 @@ export class UserService {
     this.currentUser$ = this.initUserStream();
   }
 
-  /** Get current user. */
-  public getCurrentUser(): Observable<User> {
-    return this.http
-      .get<UserDto>(this.userUrl.toString())
-      .pipe(map((userDto) => this.userMapper.fromDto(userDto)));
-  }
-
   /** Set new token.
    * @param newToken New token.
    */
   public setNewToken(newToken: Token | null): void {
     this.tokenChange$.next(newToken);
+  }
+
+  /** Logout. */
+  public removeToken(): void {
+    this.localStorageService.removeItem('token');
+    this.tokenChange$.next(null);
+  }
+
+  /** Save token.
+   * @param token Token to save.
+   */
+  public saveToken(token: Token): void {
+    this.localStorageService.saveItem<Token>('token', token);
+    this.tokenChange$.next(token);
   }
 
   /** Get token from local storage or tokenChange$. */
@@ -67,11 +76,18 @@ export class UserService {
     );
   }
 
+  /** Get current user. */
+  private getCurrentUser(): Observable<User> {
+    return this.http
+      .get<UserDto>(this.userUrl.toString())
+      .pipe(map((userDto) => this.userMapper.fromDto(userDto)));
+  }
+
   /** Fetch user info whenever currentToken emits new value. */
   private initUserStream(): Observable<User | null> {
     return this.currentToken$.pipe(
       switchMap((token) => (token ? this.getCurrentUser() : of(null))),
-      shareReplay({ refCount: true, bufferSize: 1 }),
+      shareReplay(1),
     );
   }
 }

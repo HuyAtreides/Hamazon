@@ -6,6 +6,6 @@ export interface IMapperFromDto<TDto, TDomain> {
 
 /** Mapper of domain model to DTO. */
 export interface IMapperToDto<TDto, TDomain> {
-  /** Map domain model to Dto. */
+  /** Map domain model to DTO. */
   toDto(data: TDomain): TDto;
 }

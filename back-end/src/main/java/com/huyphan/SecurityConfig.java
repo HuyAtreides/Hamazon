@@ -1,7 +1,6 @@
 package com.huyphan;
 
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +13,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
 import com.huyphan.exceptionhandlers.AuthEntry;
 import com.huyphan.filters.JwtFilter;
 import com.huyphan.services.UserService;
@@ -42,20 +40,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/** {@inheritDoc} */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors()
-				.and().csrf().disable();
+		http.cors().and().csrf().disable();
 
-		http.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		http.authorizeRequests()
-				.antMatchers("/auth/register", "/auth/login", "/auth/refresh-token")
-				.permitAll()
-				.anyRequest()
-				.authenticated();
+				.antMatchers("/auth/register", "/auth/login", "/auth/refresh-token", "/books")
+				.permitAll().anyRequest().authenticated();
 
-		http.exceptionHandling()
-				.authenticationEntryPoint(authEntry);
+		http.exceptionHandling().authenticationEntryPoint(authEntry);
 
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}

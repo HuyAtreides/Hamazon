@@ -12,7 +12,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.huyphan.models.AppError;
+import com.huyphan.models.AppException;
 
 /** Handles authentication exception. */
 @Component
@@ -25,7 +25,7 @@ public class AuthEntry implements AuthenticationEntryPoint {
 			throws IOException, ServletException {
 
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
-		AppError appError = new AppError(authException.getMessage());
+		AppException appError = new AppException(authException.getMessage());
 		ObjectMapper objectMapper = new ObjectMapper();
 		response.setContentType("application/json");
 		response.getWriter().write(objectMapper.writeValueAsString(appError));

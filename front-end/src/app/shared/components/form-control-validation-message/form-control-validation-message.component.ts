@@ -24,6 +24,9 @@ const validationErrorMessageFactories = {
   [ValidationErrorCode.Pattern]: () => 'Value does not satisfy the pattern',
   [ValidationErrorCode.Min]: ({ min }: MinValueErrorData) => `Minimum value is ${min}`,
   [ValidationErrorCode.Max]: ({ max }: MaxValueErrorData) => `Maximum value is ${max}`,
+  [ValidationErrorCode.InvalidEndDate]: () => 'Invalid end date',
+  [ValidationErrorCode.InvalidStartDate]: () => 'Invalid start date',
+  [ValidationErrorCode.InvalidDateRange]: () => 'Invalid date range',
 };
 
 /** Renders error message for the target form control. */

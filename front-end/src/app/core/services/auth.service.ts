@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
-import { catchError, map, mapTo, switchMap, switchMapTo, tap } from 'rxjs/operators';
+import { catchError, first, map, mapTo, switchMap, tap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
 
@@ -16,10 +16,9 @@ import { AppError } from '../models/app-error';
 
 import { AppConfigService } from './app-config.service';
 import { TokenDto } from './dtos/token-dto';
-import { LoginDataMapperService } from './mapper/login-data-mapper.service';
-import { TokenMapperService } from './mapper/token-mapper.service';
-import { RegisterDataMapperService } from './mapper/register-data-mapper.service';
-import { LocalStorageService } from './local-storage.service';
+import { LoginDataMapperService } from './mappers/login-data-mapper.service';
+import { TokenMapperService } from './mappers/token-mapper.service';
+import { RegisterDataMapperService } from './mappers/register-data-mapper.service';
 import { UserService } from './user.service';
 
 /**
@@ -44,7 +43,6 @@ export class AuthService {
     private readonly loginDataMapper: LoginDataMapperService,
     private readonly tokenMapper: TokenMapperService,
     private readonly registerDataMapper: RegisterDataMapperService,
-    private readonly localStorageService: LocalStorageService,
     private readonly userService: UserService,
     private readonly router: Router,
   ) {
@@ -60,7 +58,7 @@ export class AuthService {
     const loginDataDto = this.loginDataMapper.toDto(loginData);
     return this.http.post<TokenDto>(this.loginUrl.toString(), loginDataDto).pipe(
       map((data) => this.tokenMapper.fromDto(data)),
-      tap((token) => this.saveToken(token)),
+      tap((token) => this.userService.saveToken(token)),
       catchError((error: HttpErrorResponse) => throwError(error)),
     );
   }
@@ -72,7 +70,7 @@ export class AuthService {
     const registerDataDto = this.registerDataMapper.toDto(registerData);
     return this.http.post<TokenDto>(this.registerUrl.toString(), registerDataDto).pipe(
       map((data) => this.tokenMapper.fromDto(data)),
-      tap((token) => this.saveToken(token)),
+      tap((token) => this.userService.saveToken(token)),
       catchError((error: HttpErrorResponse) => throwError(error)),
     );
   }
@@ -80,6 +78,7 @@ export class AuthService {
   /** Refresh expired token. */
   public refreshToken(): Observable<void> {
     return this.userService.currentToken$.pipe(
+      first(),
       switchMap((token) => {
         if (!token) {
           return throwError(new AppError('Unauthorized'));
@@ -89,30 +88,16 @@ export class AuthService {
 
         return this.http.post<TokenDto>(this.refreshTokenUrl.toString(), tokenDto).pipe(
           map((newToken) => this.tokenMapper.fromDto(newToken)),
-          tap((newToken) => this.saveToken(newToken)),
-          catchError((error: HttpErrorResponse) =>
-            of(this.logout()).pipe(
-              switchMapTo(this.router.navigate(['/auth/login'])),
-              switchMapTo(throwError(error)),
-            ),
-          ),
-          mapTo(void 0),
+          tap((newToken) => this.userService.saveToken(newToken)),
         );
       }),
+      catchError((error: HttpErrorResponse | AppError) => throwError(error)),
+      mapTo(void 0),
     );
   }
 
   /** Logout. */
   public logout(): void {
-    this.localStorageService.removeItem('token');
-    this.userService.setNewToken(null);
-  }
-
-  /** Save token.
-   * @param token Token to save.
-   */
-  private saveToken(token: Token): void {
-    this.localStorageService.saveItem<Token>('token', token);
-    this.userService.setNewToken(token);
+    this.userService.removeToken();
   }
 }

@@ -1,0 +1,17 @@
+/** Overrides angular material styles. */
+
+.mat-paginator-container {
+  /** Override material style. */
+  justify-content: center !important;
+  background-color: var(--primary-background-color);
+}
+
+.mat-card-header-text {
+  /** Use !important to override material style. */
+  margin: 0 !important;
+}
+
+.mat-card-content {
+  /** Use !important to override material style. */
+  margin-bottom: 5px !important;
+}

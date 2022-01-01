@@ -5,7 +5,7 @@ import { RegisterDataDto } from '../dtos/register-data-dto';
 
 import { IMapperToDto } from './mapper';
 
-/** Map register data from domain model to dto.  */
+/** Register data mapper.  */
 @Injectable({
   providedIn: 'root',
 })

@@ -1,13 +1,23 @@
-<nav>
+<mat-progress-bar mode="query" *ngIf="(username$ | async) === null"></mat-progress-bar>
+<nav class="navbar">
   <mat-toolbar color="primary">
     <a routerLink="/books" class="brand">Hamazon</a>
     <span class="spacer"></span>
     <mat-icon>account_circle</mat-icon>
-    <p class="username">Hello, Huy</p>
+
+    <ng-container *ngIf="username$ | async as username; else isLoading">
+      <p class="username">{{ getWelcomeMessage(username) }}</p>
+    </ng-container>
+    <ng-template #isLoading>
+      <p class="username">Loading...</p>
+    </ng-template>
+
     <a mat-raised-button color="accent" class="home-button">Home</a>
     <button mat-raised-button color="warn" (click)="logout()">Logout</button>
     <a routerLink="" mat-icon-button title="Shopping Cart">
       <mat-icon [matBadge]="'9+'" matBadgeColor="accent">shopping_cart</mat-icon>
     </a>
   </mat-toolbar>
+
+  <div class="blur-background" *ngIf="(username$ | async) === null"></div>
 </nav>

@@ -5,7 +5,7 @@ import { LoginDataDto } from '../dtos/login-data-dto';
 
 import { IMapperToDto } from './mapper';
 
-/** Map login data from domain model to DTO. */
+/** Login data mapper. */
 @Injectable({
   providedIn: 'root',
 })

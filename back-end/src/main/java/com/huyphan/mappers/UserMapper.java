@@ -14,7 +14,7 @@ public class UserMapper implements ToDtoMapper<UserDto, User> {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	/** {@inheritDoc} */
+	/** @see ToDtoMapper#toDto(Object) */
 	@Override
 	public UserDto toDto(User data) {
 		return modelMapper.map(data, UserDto.class);

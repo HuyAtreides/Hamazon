@@ -14,13 +14,13 @@ public class TokenMapper implements ToDtoMapper<TokenDto, Token>, FromDtoMapper<
 	@Autowired
 	private ModelMapper modelMapper;
 
-	/** {@inheritDoc} */
+	/** @see ToDtoMapper#toDto(Object) */
 	@Override
 	public TokenDto toDto(Token data) {
 		return modelMapper.map(data, TokenDto.class);
 	}
 
-	/** {@inheritDoc} */
+	/** @see FromDtoMapper#fromDto(Object) */
 	@Override
 	public Token fromDto(TokenDto data) {
 		return modelMapper.map(data, Token.class);

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from './modules/material/material.module';
 import { FormControlValidationMessageComponent } from './components/form-control-validation-message/form-control-validation-message.component';
@@ -18,7 +16,7 @@ const EXPORTED_DECLARATIONS = [FormControlValidationMessageComponent, NavbarComp
  */
 @NgModule({
   declarations: [...EXPORTED_DECLARATIONS],
-  imports: [CommonModule, MaterialModule, BrowserAnimationsModule, BrowserModule],
+  imports: [CommonModule, MaterialModule, RouterModule],
   exports: [MaterialModule, ...EXPORTED_DECLARATIONS],
 })
 export class SharedModule {}

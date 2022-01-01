@@ -8,6 +8,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const EXPORTED_MODULE = [
   MatFormFieldModule,
@@ -18,11 +25,17 @@ const EXPORTED_MODULE = [
   MatToolbarModule,
   MatProgressSpinnerModule,
   MatBadgeModule,
+  MatSidenavModule,
+  MatListModule,
+  MatDividerModule,
+  MatDatepickerModule,
+  MatCardModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
 ];
 
 /**
- * Material modules
- * Contains imported angular material module.
+ * Imports and exports all needed angular material modules.
  */
 @NgModule({
   declarations: [],

@@ -17,6 +17,7 @@
 
 .form {
   width: 30%;
+  min-width: 384px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

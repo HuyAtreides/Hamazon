@@ -1,4 +1,4 @@
-package com.huyphan.models;
+package com.huyphan.models.enums;
 
 /** User roles. */
 public enum Roles {

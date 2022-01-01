@@ -3,7 +3,7 @@
   <form class="form" [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
     <mat-form-field appearance="standard">
       <mat-label>Username</mat-label>
-      <input matInput formControlName="username" />
+      <input matInput formControlName="username" type="text" />
       <mat-error>
         <app-form-control-validation-message
           [control]="getControl('username')"
