@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /** Represents a book. */
@@ -21,44 +23,48 @@ public class Book {
 
 	/** Uniquely identify a book. */
 	@Id
-	@Column(name = "Id")
+	@Column(name = "Id", nullable = false)
 	private int id;
 
 	/** Book title. */
-	@Column(name = "Title")
+	@Column(name = "Title", nullable = false)
 	private String title;
 
 	/** Book price. */
-	@Column(name = "Price")
+	@Column(name = "Price", nullable = false)
 	private double price;
 
 	/** Book published date. */
-	@Column(name = "Published", nullable = true, columnDefinition = "Date")
+	@Column(name = "Published", columnDefinition = "Date", nullable = false)
 	private LocalDate published;
 
 	/** Book pages number. */
-	@Column(name = "Pages")
-	private Integer pages;
+	@Column(name = "Pages", nullable = false)
+	private int pages;
 
 	/** Publisher of this book. */
-	@Column(name = "Publisher")
+	@Column(name = "Publisher", nullable = false)
 	private String publisher;
 
 	/** Book cover image url. */
-	@Column(name = "Image_URL")
+	@Column(name = "Image_URL", nullable = false)
 	private String imageUrl;
 
 	/** Book description. */
-	@Column(name = "Description")
+	@Column(name = "Description", nullable = false)
 	private String description;
 
+
 	/** Author of this book. */
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Author_Id")
 	private Author author;
 
 	/** Number of genres of this book. */
-	@OneToMany(mappedBy = "books")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "Book_Genre",
+			joinColumns = @JoinColumn(name = "Book_Id", referencedColumnName = "Id"),
+			inverseJoinColumns = @JoinColumn(name = "Genre", referencedColumnName = "Genre"))
 	private List<Genre> genres;
 
 	public String getIsbn() {
@@ -93,11 +99,11 @@ public class Book {
 		this.published = published;
 	}
 
-	public Integer getPages() {
+	public int getPages() {
 		return pages;
 	}
 
-	public void setPages(Integer pages) {
+	public void setPages(int pages) {
 		this.pages = pages;
 	}
 

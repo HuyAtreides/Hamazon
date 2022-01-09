@@ -9,7 +9,7 @@ public class SearchCriteriaDto {
 	/** Criteria name. */
 	private SearchCriteriaName name;
 
-	/** Entity type this search criteria used for. */
+	/** Construct which will use this search criteria to constructs Predicate. */
 	private ConstructorName constructorName;
 
 	/** Criteria value. */
@@ -31,11 +31,11 @@ public class SearchCriteriaDto {
 		this.name = name;
 	}
 
-	public ConstructorName getEntityType() {
+	public ConstructorName getConstructorName() {
 		return constructorName;
 	}
 
-	public void setEntityType(ConstructorName entityType) {
-		this.constructorName = entityType;
+	public void setConstructorName(ConstructorName constructorName) {
+		this.constructorName = constructorName;
 	}
 }

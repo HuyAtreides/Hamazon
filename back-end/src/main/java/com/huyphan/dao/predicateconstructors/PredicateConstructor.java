@@ -5,7 +5,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import com.huyphan.utils.ConstructorNameGetter;
 
-/** Construct predicate for query dynamically. */
+/** Construct predicate for dynamic query. */
 public interface PredicateConstructor<R> extends ConstructorNameGetter {
 
 	/**

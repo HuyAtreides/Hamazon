@@ -18,8 +18,8 @@
 
 .books-list {
   position: relative;
-  min-height: 450px;
-  max-height: 770px;
+  min-height: 550px;
+  max-height: 1000px;
   overflow: auto;
   display: flex;
   justify-content: center;
@@ -46,9 +46,9 @@
   font-weight: bolder;
   font-style: italic;
   text-align: center;
-  margin-top: 25px;
+  margin-top: 55px;
 }
 
 .spinner-container {
-  height: 450px;
+  height: 750px;
 }

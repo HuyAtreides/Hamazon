@@ -2,7 +2,37 @@
 <nav class="navbar">
   <mat-toolbar color="primary">
     <a routerLink="/books" class="brand">Hamazon</a>
-    <span class="spacer"></span>
+
+    <div class="search-field-container">
+      <input
+        matInput
+        placeholder="Enter book's title, author's name or ISBN"
+        type="search"
+        class="search-field"
+        [formControl]="autoCompleteControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <ng-container *ngIf="books$ | async as books; else spinner">
+          <mat-option *ngFor="let book of books">
+            <a [routerLink]="['/books', book.id]">
+              {{ book.title }} - {{ book.authorName }} ({{
+                book.publicationDate | date: 'y'
+              }})
+            </a>
+          </mat-option>
+        </ng-container>
+        <ng-template #spinner>
+          <mat-option [disabled]="true">
+            <div class="center-spinner">
+              <mat-spinner color="primary" [diameter]="30"></mat-spinner>
+            </div>
+          </mat-option>
+        </ng-template>
+      </mat-autocomplete>
+      <mat-icon class="icon">search</mat-icon>
+    </div>
+
     <mat-icon>account_circle</mat-icon>
 
     <ng-container *ngIf="username$ | async as username; else isLoading">

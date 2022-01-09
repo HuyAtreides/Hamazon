@@ -22,16 +22,12 @@ public class PredicateConstructorFactory<R> {
 	 */
 	public PredicateConstructor<R> getConstructor(SearchCriteria searchCriteria)
 			throws AppException {
-
 		ConstructorName constructorName = searchCriteria.getConstructorName();
-
 		for (PredicateConstructor<R> constructor : constructors) {
 			if (constructor.getConstructorName() == constructorName) {
 				return constructor;
 			}
 		}
-
 		throw new AppException("Predicate constructor doesn't exist");
 	}
-
 }

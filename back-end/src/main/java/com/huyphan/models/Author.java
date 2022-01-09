@@ -11,16 +11,16 @@ import javax.persistence.Table;
 public class Author {
 
 	/** Author name. */
-	@Column(name = "Name")
+	@Column(name = "Name", nullable = false)
 	private String name;
 
 	/** Author info url. */
-	@Column(name = "INFO_URL")
+	@Column(name = "INFO_URL", nullable = false)
 	private String infoUrl;
 
 	/** Uniquely identify a author. */
 	@Id
-	@Column(name = "Id")
+	@Column(name = "Id", nullable = false)
 	private String id;
 
 	public String getName() {

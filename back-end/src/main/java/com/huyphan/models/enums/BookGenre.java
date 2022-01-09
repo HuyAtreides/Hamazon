@@ -5,6 +5,7 @@ import com.huyphan.models.AppException;
 
 /** Book genres. */
 public enum BookGenre {
+	Adventure("adventure"),
 	History("history"),
 	Horror("horror"),
 	Travel("travel"),
@@ -14,6 +15,7 @@ public enum BookGenre {
 	Fantasy("fantasy"),
 	Thriller("thriller"),
 	Comics("comics"),
+	Manga("manga"),
 	SciFi("science-fiction"),
 	NonFiction("non-fiction"),
 	Science("science"),

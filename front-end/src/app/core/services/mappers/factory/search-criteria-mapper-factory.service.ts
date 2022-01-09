@@ -11,13 +11,14 @@ import { SearchCriteriaMapper } from '../search-criteria-mapper';
 })
 export class SearchCriteriaMapperFactoryService {
   public constructor(
-    @Inject(SEARCH_CRITERIA_MAPPER) private readonly mappers: SearchCriteriaMapper[],
+    @Inject(SEARCH_CRITERIA_MAPPER)
+    private readonly mappers: SearchCriteriaMapper<unknown>[],
   ) {}
 
   /** Get a appropriate mapper for a specific search criteria.
    * @param name The search criteria name used to search for mapper.
    */
-  public getMapper(name: SearchCriteriaName): SearchCriteriaMapper {
+  public getMapper(name: SearchCriteriaName): SearchCriteriaMapper<unknown> {
     for (const mapper of this.mappers) {
       if (mapper.getSearchCriteriaName() === name) {
         return mapper;

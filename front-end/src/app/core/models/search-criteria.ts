@@ -7,8 +7,10 @@ export interface SearchCriteria {
   readonly name: SearchCriteriaName;
 
   /** Value of this search criteria. */
-  readonly value: Object;
+  readonly value: unknown;
 
   /** Description of what this search criteria used for. */
   readonly usageDescription: SearchCriteriaUsageDescription;
 }
+
+export type SearchCriteriaInfo = Omit<SearchCriteria, 'value'>;

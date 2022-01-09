@@ -2,12 +2,10 @@ package com.huyphan.models;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,15 +18,15 @@ public class User implements UserDetails {
 
 	/** Username. */
 	@Id
-	@Column(name = "Username")
+	@Column(name = "Username", nullable = false)
 	private String username;
 
 	/** User email. */
-	@Column(name = "Email")
+	@Column(name = "Email", nullable = false)
 	private String email;
 
 	/** User password. */
-	@Column(name = "Password")
+	@Column(name = "Password", nullable = false)
 	private String password;
 
 	/** {@inheritDoc} */

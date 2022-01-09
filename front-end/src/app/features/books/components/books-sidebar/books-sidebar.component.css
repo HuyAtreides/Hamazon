@@ -1,7 +1,9 @@
 :host {
   background-color: var(--primary-background-color);
+  color: var(--primary-color);
 }
 
 .form-item {
   margin-bottom: 25px;
+  color: var(--primary-color);
 }

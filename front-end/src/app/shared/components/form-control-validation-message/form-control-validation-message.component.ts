@@ -50,7 +50,6 @@ export class FormControlValidationMessageComponent implements DoCheck {
       const errorCode = Object.keys(this.control.errors)[0] as ValidationErrorCode;
       const errorData = this.control.errors[errorCode];
       const factory = validationErrorMessageFactories[errorCode];
-
       if (factory != null) {
         this.errorMessage$.next(factory(errorData));
       } else {

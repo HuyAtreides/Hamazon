@@ -13,6 +13,7 @@ import { RefreshTokenInterceptor } from './core/interceptors/refresh-token.inter
 import { SearchByDateRangeMapperService } from './core/services/mappers/search-by-date-range-mapper.service';
 import { SearchByGenreMapperService } from './core/services/mappers/search-by-genre-mapper.service';
 import { SearchByTextMapperService } from './core/services/mappers/search-by-text-mapper.service';
+import { SharedModule } from './shared/shared.module';
 
 const httpInterceptorProviders = [
   // The refresh interceptor should be before the auth interceptor, otherwise refreshed bearer would not be updated
@@ -39,6 +40,7 @@ const searchCriteriaMapperProviders = [
     BrowserAnimationsModule,
     HttpClientModule,
     MatNativeDateModule,
+    SharedModule,
   ],
   providers: [...httpInterceptorProviders, ...searchCriteriaMapperProviders],
   bootstrap: [AppComponent],

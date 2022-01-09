@@ -4,8 +4,6 @@ import { Observable, throwError } from 'rxjs';
 
 import { catchError, first, map, mapTo, switchMap, tap } from 'rxjs/operators';
 
-import { Router } from '@angular/router';
-
 import { LoginData } from '../models/login-data';
 
 import { Token } from '../models/token';
@@ -44,7 +42,6 @@ export class AuthService {
     private readonly tokenMapper: TokenMapperService,
     private readonly registerDataMapper: RegisterDataMapperService,
     private readonly userService: UserService,
-    private readonly router: Router,
   ) {
     this.loginUrl = new URL('auth/login', this.appConfig.apiUrl);
     this.registerUrl = new URL('auth/register', this.appConfig.apiUrl);

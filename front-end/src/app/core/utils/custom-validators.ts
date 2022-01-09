@@ -24,4 +24,32 @@ export namespace CustomValidators {
       return null;
     };
   }
+
+  /** Validate date range form control. Valid if both start date and end date are provided or none of them are provided.
+   * @param startDateControlName Name of start date control.
+   * @param endDateControlName Name of end date control.
+   */
+  export function dateRangeControl(
+    startDateControlName = 'start',
+    endDateControlName = 'end',
+  ): ValidatorFn {
+    return (control: AbstractControl) => {
+      const startDateControl = control.get(startDateControlName);
+      const endDateControl = control.get(endDateControlName);
+      if (startDateControl && endDateControl) {
+        if (
+          (startDateControl.value && endDateControl.value) ||
+          (!startDateControl.value && !endDateControl.value)
+        ) {
+          return null;
+        }
+
+        return {
+          [ValidationErrorCode.InvalidDateRange]: {},
+        };
+      }
+
+      return null;
+    };
+  }
 }

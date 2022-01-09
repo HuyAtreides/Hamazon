@@ -15,6 +15,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const EXPORTED_MODULE = [
   MatFormFieldModule,
@@ -32,6 +34,8 @@ const EXPORTED_MODULE = [
   MatCardModule,
   MatPaginatorModule,
   MatProgressBarModule,
+  MatSelectModule,
+  MatAutocompleteModule,
 ];
 
 /**

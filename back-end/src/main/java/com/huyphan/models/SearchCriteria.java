@@ -12,7 +12,7 @@ public class SearchCriteria {
 	/** Criteria name. */
 	private SearchCriteriaName name;
 
-	/** Entity type this search criteria used for. */
+	/** Construct which will use this search criteria to constructs Predicate. */
 	private ConstructorName constructorName;
 
 

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomErrorStateMatcher } from 'src/app/core/services/custom-error-state-matcher.service';
 import { handleError } from 'src/app/core/utils/handle-error';
 
 const SNACK_BAR_ACTION_TITLE = 'Close';
@@ -37,6 +38,7 @@ export class LoginComponent implements OnDestroy {
     private readonly authService: AuthService,
     private readonly snackbar: MatSnackBar,
     private readonly router: Router,
+    public readonly customErrorStateMatcher: CustomErrorStateMatcher,
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],

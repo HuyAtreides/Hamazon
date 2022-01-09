@@ -1,5 +1,31 @@
-.spacer {
+.search-field-container {
   flex: 1 1 auto;
+  margin-left: 25px;
+  margin-right: 25px;
+  border: 1px solid var(--faint-color);
+  border-radius: 3px;
+  height: 35px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+.search-field {
+  outline: none;
+  color: var(--primary-color);
+  font-size: 1.3rem;
+  padding: 7px;
+  margin: 0;
+  font-weight: normal;
+  box-shadow: none;
+}
+
+.icon {
+  position: absolute;
+  right: 5px;
+  top: 20%;
+  color: var(--primary-color);
 }
 
 .brand {

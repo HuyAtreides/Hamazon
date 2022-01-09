@@ -1,7 +1,5 @@
 package com.huyphan.dtos;
 
-import java.util.List;
-
 /** Pagination options DTO. */
 public class PaginationOptionsDto {
 
@@ -10,16 +8,6 @@ public class PaginationOptionsDto {
 
 	/** Page number (start from 0). */
 	private int page;
-
-	private List<SearchCriteriaDto> criteria;
-
-	public List<SearchCriteriaDto> getCriteria() {
-		return criteria;
-	}
-
-	public void setCriteria(List<SearchCriteriaDto> criteria) {
-		this.criteria = criteria;
-	}
 
 	public int getPageSize() {
 		return pageSize;

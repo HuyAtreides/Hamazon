@@ -1,30 +1,45 @@
 package com.huyphan.controllers;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.huyphan.dtos.PaginationOptionsDto;
-import com.huyphan.mappers.PaginationOptionsMapper;
-import com.huyphan.models.PaginationOptions;
-import com.huyphan.models.SearchCriteria;
+import com.huyphan.dtos.BookDto;
+import com.huyphan.dtos.BookPaginationOptionsDto;
+import com.huyphan.dtos.PageDto;
+import com.huyphan.services.BookService;
 
 /** Handle operations related to books. */
 @RestController
 @RequestMapping("/books")
 public class BooksController {
 
+
 	@Autowired
-	private PaginationOptionsMapper mapper;
+	private BookService bookService;
 
-	@PostMapping
-	public String searchBooks(@RequestBody PaginationOptionsDto paginationOptionsDto) {
-		PaginationOptions p = mapper.fromDto(paginationOptionsDto);
-		for (SearchCriteria s : p.getCriteria()) {
+	/**
+	 * Search books.
+	 * 
+	 * @param bookPaginationOptionsDto. Book pagination options DTO.
+	 */
+	@PostMapping("/search")
+	public PageDto<BookDto> searchBooks(
+			@RequestBody BookPaginationOptionsDto bookPaginationOptionsDto) {
+		return bookService.searchBooks(bookPaginationOptionsDto);
+	}
 
-			System.out.println(s.getValue());
-		}
-		return "";
+	/**
+	 * Return a list of books that matched the provided search string.
+	 * 
+	 * @param searchString Search string used to search for books.
+	 */
+	@GetMapping("/suggest")
+	public List<BookDto> suggestsBook(@RequestParam String searchString) {
+		return bookService.suggestBooks(searchString);
 	}
 }

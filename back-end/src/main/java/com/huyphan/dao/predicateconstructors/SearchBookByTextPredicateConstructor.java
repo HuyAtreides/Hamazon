@@ -1,6 +1,7 @@
 package com.huyphan.dao.predicateconstructors;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -10,15 +11,17 @@ import com.huyphan.models.Author;
 import com.huyphan.models.Book;
 import com.huyphan.models.enums.ConstructorName;
 
+/** Constructs search book by text predicate. */
 @Component
 public class SearchBookByTextPredicateConstructor implements PredicateConstructor<Book> {
 
-
+	/** {@inheritDoc} */
 	@Override
 	public ConstructorName getConstructorName() {
 		return ConstructorName.SearchBookByText;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public Predicate constructPredicate(CriteriaBuilder criteriaBuilder, Root<Book> root,
 			Object criteriaValue) {
@@ -28,11 +31,15 @@ public class SearchBookByTextPredicateConstructor implements PredicateConstructo
 
 		String queryText = (String) criteriaValue;
 
-		Predicate bookTitleMatched = criteriaBuilder.equal(bookTitle, queryText);
+		String pattern = "%" + queryText.toLowerCase() + "%";
 
-		Predicate isbnMatched = criteriaBuilder.equal(isbn, queryText);
+		Expression<String> lowerCaseBookTitle = criteriaBuilder.lower(bookTitle);
 
-		Predicate authorNameMatched = criteriaBuilder.equal(author.<String>get("name"), queryText);
+		Predicate bookTitleMatched = criteriaBuilder.like(lowerCaseBookTitle, pattern);
+
+		Predicate isbnMatched = criteriaBuilder.like(isbn, pattern);
+
+		Predicate authorNameMatched = criteriaBuilder.like(author.<String>get("name"), pattern);
 
 		Predicate isbnMatchedOrAuthorNameMatched =
 				criteriaBuilder.or(isbnMatched, authorNameMatched);

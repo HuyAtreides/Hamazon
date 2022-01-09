@@ -1,7 +1,5 @@
 package com.huyphan.models;
 
-import java.util.List;
-
 /** Pagination options. */
 public class PaginationOptions {
 
@@ -10,16 +8,6 @@ public class PaginationOptions {
 
 	/** Page number (start from 0). */
 	private int page;
-
-	private List<SearchCriteria> criteria;
-
-	public List<SearchCriteria> getCriteria() {
-		return criteria;
-	}
-
-	public void setCriteria(List<SearchCriteria> criteria) {
-		this.criteria = criteria;
-	}
 
 	public int getPageSize() {
 		return pageSize;
