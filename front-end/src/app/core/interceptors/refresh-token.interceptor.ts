@@ -55,6 +55,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   public shouldRefreshToken(url: string): boolean {
     const homeUrl = new URL('', this.appConfig.apiUrl);
     const isHomeUrl = url.startsWith(homeUrl.toString());
-    return isHomeUrl;
+    const isAuthRequest = url.startsWith(new URL('auth', homeUrl).toString());
+    return isHomeUrl && !isAuthRequest;
   }
 }
