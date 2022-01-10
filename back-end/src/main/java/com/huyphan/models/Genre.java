@@ -1,6 +1,6 @@
 package com.huyphan.models;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +20,7 @@ public class Genre {
 
 	/** List of book that contains this genre. */
 	@ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
-	private List<Book> books;
+	private Set<Book> books;
 
 	public String getValue() {
 		return value;
@@ -30,11 +30,11 @@ public class Genre {
 		this.value = value;
 	}
 
-	public List<Book> getBooks() {
+	public Set<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(List<Book> books) {
+	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 }

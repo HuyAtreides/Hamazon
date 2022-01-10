@@ -1,6 +1,7 @@
 package com.huyphan.mappers;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -19,8 +20,8 @@ public class BookMapper implements ToDtoMapper<BookDto, Book> {
 
 	@Override
 	public BookDto toDto(Book data) {
-		Converter<List<Genre>, List<String>> converter = (context) -> {
-			List<Genre> genres = context.getSource();
+		Converter<Set<Genre>, List<String>> converter = (context) -> {
+			Set<Genre> genres = context.getSource();
 
 			return genres.stream().map(genre -> genre.getValue()).collect(Collectors.toList());
 		};

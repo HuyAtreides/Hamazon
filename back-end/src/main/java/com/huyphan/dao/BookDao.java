@@ -14,7 +14,7 @@ public interface BookDao extends SearchSpecificationContructor<Book>, CrudReposi
 	 * 
 	 * @param pattern Search pattern.
 	 */
-	@Query("select book from Book book "
+	@Query("select book from Book book join fetch book.genres join fetch book.author "
 			+ "where lower(book.title) like :pattern or lower(book.isbn) like :pattern or lower(book.author.name) like :pattern")
 	List<Book> findByPattern(@Param("pattern") String pattern);
 }
