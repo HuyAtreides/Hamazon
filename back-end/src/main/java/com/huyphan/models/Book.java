@@ -1,7 +1,7 @@
 package com.huyphan.models;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,16 +56,16 @@ public class Book {
 
 
 	/** Author of this book. */
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Author_Id")
 	private Author author;
 
 	/** Number of genres of this book. */
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "Book_Genre",
 			joinColumns = @JoinColumn(name = "Book_Id", referencedColumnName = "Id"),
 			inverseJoinColumns = @JoinColumn(name = "Genre", referencedColumnName = "Genre"))
-	private List<Genre> genres;
+	private Set<Genre> genres;
 
 	public String getIsbn() {
 		return isbn;
@@ -147,11 +147,11 @@ public class Book {
 		this.id = id;
 	}
 
-	public List<Genre> getGenres() {
+	public Set<Genre> getGenres() {
 		return genres;
 	}
 
-	public void setGenres(List<Genre> genres) {
+	public void setGenres(Set<Genre> genres) {
 		this.genres = genres;
 	}
 
