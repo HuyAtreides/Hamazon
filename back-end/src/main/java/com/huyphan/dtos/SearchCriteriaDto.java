@@ -2,8 +2,12 @@ package com.huyphan.dtos;
 
 import com.huyphan.models.enums.ConstructorName;
 import com.huyphan.models.enums.SearchCriteriaName;
+import lombok.Getter;
+import lombok.Setter;
 
 /** Search criteria DTO. */
+@Getter
+@Setter
 public class SearchCriteriaDto {
 
 	/** Criteria name. */
@@ -14,28 +18,4 @@ public class SearchCriteriaDto {
 
 	/** Criteria value. */
 	private Object value;
-
-	public SearchCriteriaName getName() {
-		return name;
-	}
-
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	public void setName(SearchCriteriaName name) {
-		this.name = name;
-	}
-
-	public ConstructorName getConstructorName() {
-		return constructorName;
-	}
-
-	public void setConstructorName(ConstructorName constructorName) {
-		this.constructorName = constructorName;
-	}
 }

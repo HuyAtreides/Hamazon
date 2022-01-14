@@ -1,6 +1,11 @@
 package com.huyphan.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /** Data required for login. */
+@Getter
+@Setter
 public class LoginData {
 
 	/** User name. */
@@ -8,20 +13,4 @@ public class LoginData {
 
 	/** User Password. */
 	private String password;
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getusername() {
-		return username;
-	}
-
-	public void setusername(String username) {
-		this.username = username;
-	}
 }

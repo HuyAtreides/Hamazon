@@ -1,6 +1,11 @@
 package com.huyphan.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /** Pagination options DTO. */
+@Getter
+@Setter
 public class PaginationOptionsDto {
 
 	/** Number of items per page. */
@@ -8,21 +13,4 @@ public class PaginationOptionsDto {
 
 	/** Page number (start from 0). */
 	private int page;
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public int getPage() {
-		return page;
-	}
-
-	public void setPage(int page) {
-		this.page = page;
-	}
-
 }

@@ -1,6 +1,11 @@
 package com.huyphan.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /** Pagination options. */
+@Getter
+@Setter
 public class PaginationOptions {
 
 	/** Number of items per page. */
@@ -8,20 +13,4 @@ public class PaginationOptions {
 
 	/** Page number (start from 0). */
 	private int page;
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public int getPage() {
-		return page;
-	}
-
-	public void setPage(int page) {
-		this.page = page;
-	}
 }

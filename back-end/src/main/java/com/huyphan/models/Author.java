@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 /** Represents a book author. */
+@Getter
+@Setter
 @Entity
 @Table(name = "Author")
 public class Author {
@@ -22,28 +26,4 @@ public class Author {
 	@Id
 	@Column(name = "Id", nullable = false)
 	private String id;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getInfoUrl() {
-		return infoUrl;
-	}
-
-	public void setInfoUrl(String infoUrl) {
-		this.infoUrl = infoUrl;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 }

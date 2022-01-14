@@ -1,6 +1,11 @@
 package com.huyphan.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /** Login data DTO. */
+@Getter
+@Setter
 public class LoginDataDto {
 
 	/** Username. */
@@ -8,21 +13,4 @@ public class LoginDataDto {
 
 	/** User password. */
 	private String password;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 }

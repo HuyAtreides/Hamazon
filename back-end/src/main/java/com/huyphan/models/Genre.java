@@ -1,6 +1,7 @@
 package com.huyphan.models;
 
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,8 +20,8 @@ public class Genre {
 	private String value;
 
 	/** List of book that contains this genre. */
-	@ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
-	private Set<Book> books;
+	@ManyToMany(mappedBy = "genre", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Set<BookGenre> books;
 
 	public String getValue() {
 		return value;
@@ -30,11 +31,11 @@ public class Genre {
 		this.value = value;
 	}
 
-	public Set<Book> getBooks() {
+	public Set<BookGenre> getBooks() {
 		return books;
 	}
 
-	public void setBooks(Set<Book> books) {
+	public void setBooks(Set<BookGenre> books) {
 		this.books = books;
 	}
 }

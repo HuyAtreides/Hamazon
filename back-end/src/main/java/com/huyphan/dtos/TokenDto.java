@@ -1,17 +1,13 @@
 package com.huyphan.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /** Token DTO. */
+@Getter
+@Setter
 public class TokenDto {
 
 	/** Token value. */
 	private String value;
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 }

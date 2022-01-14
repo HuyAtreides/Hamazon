@@ -1,26 +1,15 @@
 package com.huyphan.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /** UserDto. */
+@Getter
+@Setter
 public class UserDto {
-	/** Username. */
+	/** User name. */
 	private String username;
 
 	/** User email. */
 	private String email;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 }

@@ -8,8 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import lombok.Getter;
+import lombok.Setter;
 
 /** Represents a user. */
+@Getter
+@Setter
 @Table(name = "`User`")
 @Entity
 public class User implements UserDetails {
@@ -70,21 +74,4 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 }

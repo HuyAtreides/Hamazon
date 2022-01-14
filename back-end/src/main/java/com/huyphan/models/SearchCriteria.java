@@ -2,8 +2,12 @@ package com.huyphan.models;
 
 import com.huyphan.models.enums.ConstructorName;
 import com.huyphan.models.enums.SearchCriteriaName;
+import lombok.Getter;
+import lombok.Setter;
 
 /** Searching criteria. */
+@Getter
+@Setter
 public class SearchCriteria {
 
 	/** Value used by this criteria to filter query results. */
@@ -14,29 +18,4 @@ public class SearchCriteria {
 
 	/** Construct which will use this search criteria to constructs Predicate. */
 	private ConstructorName constructorName;
-
-
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	public SearchCriteriaName getName() {
-		return name;
-	}
-
-	public void setName(SearchCriteriaName name) {
-		this.name = name;
-	}
-
-	public ConstructorName getConstructorName() {
-		return constructorName;
-	}
-
-	public void setConstructorName(ConstructorName constructorName) {
-		this.constructorName = constructorName;
-	}
 }
