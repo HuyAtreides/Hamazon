@@ -8,8 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,6 +66,9 @@ public class Book {
 	private Author author;
 
 	/** Number of genres of this book. */
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "book")
-	private Set<BookGenre> genres;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinTable(name = "Book_Genre",
+			joinColumns = @JoinColumn(name = "Book_Id", referencedColumnName = "Id"),
+			inverseJoinColumns = @JoinColumn(name = "Genre", referencedColumnName = "Genre"))
+	private Set<Genre> genres;
 }

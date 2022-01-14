@@ -8,8 +8,12 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 /** Represent a book's genres. */
+@Getter
+@Setter
 @Entity
 @Table(name = "Genre")
 public class Genre {
@@ -20,22 +24,6 @@ public class Genre {
 	private String value;
 
 	/** List of book that contains this genre. */
-	@ManyToMany(mappedBy = "genre", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	private Set<BookGenre> books;
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public Set<BookGenre> getBooks() {
-		return books;
-	}
-
-	public void setBooks(Set<BookGenre> books) {
-		this.books = books;
-	}
+	@ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Set<Book> books;
 }
