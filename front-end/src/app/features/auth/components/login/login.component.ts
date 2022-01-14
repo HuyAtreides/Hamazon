@@ -1,14 +1,11 @@
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { finalize, takeUntil, tap } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomErrorStateMatcher } from 'src/app/core/services/custom-error-state-matcher.service';
 import { handleError } from 'src/app/core/utils/handle-error';
-
-const SNACK_BAR_ACTION_TITLE = 'Close';
 
 /** Login page. */
 @Component({
@@ -36,7 +33,6 @@ export class LoginComponent implements OnDestroy {
   public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly snackbar: MatSnackBar,
     private readonly router: Router,
     public readonly customErrorStateMatcher: CustomErrorStateMatcher,
   ) {
@@ -44,17 +40,6 @@ export class LoginComponent implements OnDestroy {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
-
-    this.errorMessage$
-      .pipe(
-        tap((message) =>
-          this.snackbar.open(message, SNACK_BAR_ACTION_TITLE, {
-            duration: 2500,
-          }),
-        ),
-        takeUntil(this.componentDestroyed$),
-      )
-      .subscribe();
   }
 
   /** @inheritdoc */
