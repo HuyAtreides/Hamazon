@@ -3,8 +3,12 @@ package com.huyphan.dtos;
 import java.util.List;
 import com.huyphan.models.enums.BookOrderField;
 import com.huyphan.models.enums.OrderDirection;
+import lombok.Getter;
+import lombok.Setter;
 
 /** Book pagination options DTO. */
+@Getter
+@Setter
 public class BookPaginationOptionsDto extends PaginationOptionsDto {
 
 	/** Order direction. */
@@ -15,29 +19,4 @@ public class BookPaginationOptionsDto extends PaginationOptionsDto {
 
 	/** Search criteria list. */
 	private List<SearchCriteriaDto> criteria;
-
-	public List<SearchCriteriaDto> getCriteria() {
-		return criteria;
-	}
-
-	public void setCriteria(List<SearchCriteriaDto> criteria) {
-		this.criteria = criteria;
-	}
-
-	public OrderDirection getOrderDirection() {
-		return orderDirection;
-	}
-
-	public void setOrderDirection(OrderDirection orderDirection) {
-		this.orderDirection = orderDirection;
-	}
-
-	public BookOrderField getOrderField() {
-		return orderField;
-	}
-
-	public void setOrderField(BookOrderField orderField) {
-		this.orderField = orderField;
-	}
-
 }

@@ -1,0 +1,62 @@
+<ng-container *ngIf="book$ | async as book">
+  <div class="book-details-container">
+    <img [src]="book.coverImgUrl" alt="" class="book-cover-img" />
+    <div class="book-details">
+      <h2 class="book-title">
+        {{ book.title }}
+        <span class="date">({{ book.publicationDate | date: 'y' }})</span>
+      </h2>
+      <h3 class="book-author">
+        By
+        <a [href]="book.authorInfoUrl" class="book-author__name" target="_blank">{{
+          book.authorName
+        }}</a>
+      </h3>
+
+      <mat-chip-list>
+        <mat-chip *ngFor="let genre of book.genres">
+          {{ toGenreReadable(genre) }}
+        </mat-chip>
+      </mat-chip-list>
+      <br />
+      <mat-divider></mat-divider>
+      <br />
+      <p [innerHtml]="book.description" class="book-description"></p>
+      <mat-divider></mat-divider>
+      <div class="book-info-container">
+        <div class="book-info">
+          <p>Pages</p>
+          <mat-icon> auto_stories </mat-icon>
+          <p class="book-info__content">{{ book.pages }}</p>
+        </div>
+        <div class="book-info">
+          <p>Publisher</p>
+          <mat-icon> apartment </mat-icon>
+          <p class="book-info__content">{{ book.publisher }}</p>
+        </div>
+        <div class="book-info book-price">
+          <p>Price</p>
+          <mat-icon> paid </mat-icon>
+          <p class="book-info__content">{{ book.price | currency }}</p>
+        </div>
+        <div class="book-info">
+          <p>Publication Date</p>
+          <mat-icon> calendar_month </mat-icon>
+          <p class="book-info__content">{{ book.publicationDate | date: 'longDate' }}</p>
+        </div>
+        <div class="book-info" *ngIf="book.isbn">
+          <p>ISBN</p>
+          <mat-icon> line_weight </mat-icon>
+          <p class="book-info__content">{{ book.isbn }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-buy-box [book]="book"></app-buy-box>
+</ng-container>
+
+<ng-template #loading>
+  <div class="center-spinner">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+</ng-template>

@@ -1,11 +1,11 @@
-package com.huyphan.dao;
+package com.huyphan.repositories;
 
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import com.huyphan.models.User;
 
 /** User DAO. */
-public interface UserDao extends CrudRepository<User, String> {
+public interface UserRepo extends CrudRepository<User, String> {
 
 	/**
 	 * Find user by username or email.

@@ -1,0 +1,51 @@
+<form class="buy-box" [formGroup]="buyBoxControl" (ngSubmit)="handleAddNewCartItem()">
+  <div class="book-price">
+    <p class="buy-new-text">Buy new:</p>
+    <p class="price">{{ book.price | currency }}</p>
+  </div>
+
+  <div class="book-price">
+    <p class="buy-new-text">Total:</p>
+    <p class="price">{{ totalPrice | currency }}</p>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Quantity</mat-label>
+    <input
+      matInput
+      type="number"
+      formControlName="quantity"
+      [errorStateMatcher]="errorStateMatcher"
+    />
+    <mat-error>
+      <app-form-control-validation-message
+        [control]="buyBoxControl.controls.quantity"
+      ></app-form-control-validation-message>
+    </mat-error>
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    class="add-to-cart-button"
+    type="submit"
+    [disabled]="isLoading$ | async"
+  >
+    Add to Cart
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    class="add-to-cart-button"
+    type="button"
+    [disabled]="isLoading$ | async"
+  >
+    Buy Now
+  </button>
+  <div class="absolute-spinner-container" *ngIf="isLoading$ | async">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+  <div class="blur-background" *ngIf="isLoading$ | async"></div>
+</form>
+
+<app-message-snack-bar [message$]="errorMessage$"></app-message-snack-bar>

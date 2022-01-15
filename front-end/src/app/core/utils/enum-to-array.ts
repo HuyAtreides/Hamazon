@@ -1,4 +1,4 @@
-type NonFunctional<T> = T extends Function ? never : T;
+import { NonFunctional } from './types/non-functional';
 
 /**
  * Helper to produce an array of enum values.

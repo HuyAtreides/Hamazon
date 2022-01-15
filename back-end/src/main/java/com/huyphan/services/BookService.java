@@ -1,6 +1,7 @@
 package com.huyphan.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.huyphan.dao.BookDao;
 import com.huyphan.dao.predicateconstructors.factory.PredicateConstructorFactory;
 import com.huyphan.dtos.BookDto;
 import com.huyphan.dtos.BookPaginationOptionsDto;
@@ -19,10 +19,12 @@ import com.huyphan.dtos.PageDto;
 import com.huyphan.mappers.BookMapper;
 import com.huyphan.mappers.BookPaginationOptionsMapper;
 import com.huyphan.mappers.PageMapper;
+import com.huyphan.models.AppException;
 import com.huyphan.models.Book;
 import com.huyphan.models.BookPaginationOptions;
 import com.huyphan.models.SearchCriteria;
 import com.huyphan.models.enums.OrderDirection;
+import com.huyphan.repositories.BookRepo;
 import com.huyphan.utils.DirectionConverter;
 
 /** Service performs operations related to book. */
@@ -36,7 +38,7 @@ public class BookService {
 	private BookPaginationOptionsMapper paginationOptionsMapper;
 
 	@Autowired
-	private BookDao bookDao;
+	private BookRepo bookDao;
 
 	@Autowired
 	private BookMapper bookMapper;
@@ -78,5 +80,19 @@ public class BookService {
 		String pattern = "%" + searchString.toLowerCase() + "%";
 		List<Book> books = bookDao.findByPattern(pattern);
 		return books.stream().map(book -> bookMapper.toDto(book)).collect(Collectors.toList());
+	}
+
+	/**
+	 * Get a specific book.
+	 * 
+	 * @param id Book id.
+	 * @throws AppException
+	 */
+	public BookDto getBook(int id) throws AppException {
+		Optional<Book> optionalBook = bookDao.findById(id);
+		if (optionalBook.isEmpty()) {
+			throw new AppException("Book not found");
+		}
+		return bookMapper.toDto(optionalBook.get());
 	}
 }

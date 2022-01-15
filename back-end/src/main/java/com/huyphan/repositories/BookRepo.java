@@ -1,4 +1,4 @@
-package com.huyphan.dao;
+package com.huyphan.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -7,8 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import com.huyphan.models.Book;
 
-public interface BookDao extends SearchSpecificationContructor<Book>, CrudRepository<Book, Integer>,
-		JpaSpecificationExecutor<Book> {
+/** Book repository. */
+public interface BookRepo extends SearchSpecificationContructor<Book>,
+		CrudRepository<Book, Integer>, JpaSpecificationExecutor<Book> {
 	/**
 	 * Find all books that have author name or title or isbn matched pattern.
 	 * 

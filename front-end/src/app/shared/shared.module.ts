@@ -10,11 +10,13 @@ import { FormControlValidationMessageComponent } from './components/form-control
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SortPipe } from './pipes/sort.pipe';
+import { MessageSnackBarComponent } from './components/message-snack-bar/message-snack-bar.component';
 
 const EXPORTED_DECLARATIONS = [
   FormControlValidationMessageComponent,
   NavbarComponent,
   SortPipe,
+  MessageSnackBarComponent,
 ];
 
 /**

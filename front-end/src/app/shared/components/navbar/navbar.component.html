@@ -14,7 +14,7 @@
       />
       <mat-autocomplete #auto="matAutocomplete">
         <ng-container *ngIf="books$ | async as books; else spinner">
-          <mat-option *ngFor="let book of books">
+          <mat-option *ngFor="let book of books; trackBy: trackBook">
             <a [routerLink]="['/books', book.id]">
               {{ book.title }} - {{ book.authorName }} ({{
                 book.publicationDate | date: 'y'
@@ -43,9 +43,13 @@
     </ng-template>
 
     <a mat-raised-button color="accent" class="home-button">Home</a>
-    <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    <button type="button" mat-raised-button color="warn" (click)="logout()">
+      Logout
+    </button>
     <a routerLink="" mat-icon-button title="Shopping Cart">
-      <mat-icon [matBadge]="'9+'" matBadgeColor="accent">shopping_cart</mat-icon>
+      <mat-icon [matBadge]="formatCartLength(cartLength$ | async)" matBadgeColor="accent">
+        shopping_cart
+      </mat-icon>
     </a>
   </mat-toolbar>
 

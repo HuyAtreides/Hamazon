@@ -1,3 +1,5 @@
+import { Genre } from '../enums/genre';
+
 /** Represents a book. */
 export interface Book {
   /** Book ISBN. */
@@ -34,5 +36,5 @@ export interface Book {
   readonly authorInfoUrl: string;
 
   /** Book genres. */
-  readonly genres: readonly string[];
+  readonly genres: readonly Genre[];
 }

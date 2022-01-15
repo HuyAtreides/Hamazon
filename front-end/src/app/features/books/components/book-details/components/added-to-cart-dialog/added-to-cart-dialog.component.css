@@ -1,0 +1,10 @@
+.message {
+  color: var(--success-color);
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.message-text {
+  margin-left: 3px;
+}

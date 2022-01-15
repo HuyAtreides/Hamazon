@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.huyphan.dtos.LoginDataDto;
 import com.huyphan.mappers.LoginDataMapper;
@@ -27,13 +28,21 @@ public class AuthService {
 	 */
 	public User login(LoginDataDto loginDataDto) {
 		LoginData loginData = loginDataMapper.fromDto(loginDataDto);
-		String username = loginData.getusername();
+		String username = loginData.getUsername();
 		String password = loginData.getPassword();
-		UsernamePasswordAuthenticationToken UsernamePasswordAuthentication =
+		UsernamePasswordAuthenticationToken usernamePasswordAuthentication =
 				new UsernamePasswordAuthenticationToken(username, password);
 		Authentication authentication =
-				authenticationManager.authenticate(UsernamePasswordAuthentication);
+				authenticationManager.authenticate(usernamePasswordAuthentication);
 		User user = (User) authentication.getPrincipal();
+		return user;
+	}
+
+	/** Get current authenticated user. */
+	public User getCurrentAuthenticatedUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+
 		return user;
 	}
 }

@@ -17,6 +17,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const EXPORTED_MODULE = [
   MatFormFieldModule,
@@ -36,6 +38,8 @@ const EXPORTED_MODULE = [
   MatProgressBarModule,
   MatSelectModule,
   MatAutocompleteModule,
+  MatChipsModule,
+  MatDialogModule,
 ];
 
 /**

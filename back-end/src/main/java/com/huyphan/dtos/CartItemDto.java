@@ -15,5 +15,5 @@ public class CartItemDto {
 	private int amount;
 
 	/** The book of this cart. */
-	private BookDto bookDto;
+	private BookDto book;
 }

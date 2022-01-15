@@ -16,6 +16,8 @@
   color: var(--primary-color);
   font-size: 1.3rem;
   padding: 7px;
+  border: none;
+  width: 100%;
   margin: 0;
   font-weight: normal;
   box-shadow: none;

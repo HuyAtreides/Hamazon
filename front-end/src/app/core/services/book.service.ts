@@ -72,4 +72,15 @@ export class BookService {
         map((booksDto) => booksDto.map((bookDto) => this.bookMapper.fromDto(bookDto))),
       );
   }
+
+  /** Get a specific book.
+   * @param id Book id.
+   */
+  public getBook(id: number): Observable<Book> {
+    const bookUrl = new URL(`books/${id}`, this.appConfig.apiUrl);
+
+    return this.http
+      .get<BookDto>(bookUrl.toString())
+      .pipe(map((response) => this.bookMapper.fromDto(response)));
+  }
 }

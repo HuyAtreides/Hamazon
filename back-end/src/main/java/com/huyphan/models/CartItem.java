@@ -1,5 +1,6 @@
 package com.huyphan.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +37,7 @@ public class CartItem {
 	private int amount;
 
 	/** The book of this cart. */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "Book_Id", insertable = false, updatable = false)
 	private Book book;
 }

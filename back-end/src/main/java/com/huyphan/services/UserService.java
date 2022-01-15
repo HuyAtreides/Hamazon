@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.huyphan.dao.UserDao;
 import com.huyphan.dtos.RegisterDataDto;
 import com.huyphan.dtos.UserDto;
 import com.huyphan.mappers.RegisterDataMapper;
@@ -16,13 +15,14 @@ import com.huyphan.mappers.UserMapper;
 import com.huyphan.models.AppException;
 import com.huyphan.models.RegisterData;
 import com.huyphan.models.User;
+import com.huyphan.repositories.UserRepo;
 
 /** Service performs operations related to user. */
 @Service
 public class UserService implements UserDetailsService {
 
 	@Autowired
-	private UserDao userDao;
+	private UserRepo userDao;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -40,8 +40,7 @@ public class UserService implements UserDetailsService {
 	 */
 	@Override
 	public User loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> optionalUser = userDao.findById(username);
-
+		Optional<User> optionalUser = userDao.findByUsernameOrEmail(username, username);
 		if (optionalUser.isEmpty()) {
 			throw new UsernameNotFoundException("Username is not found");
 		}

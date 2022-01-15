@@ -1,4 +1,4 @@
-package com.huyphan.dao;
+package com.huyphan.repositories;
 
 import java.util.List;
 import javax.persistence.criteria.Predicate;
