@@ -10,6 +10,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 const SNACK_BAR_ACTION_TITLE = 'Close';
+const SNACK_BAR_DURATION = 2500;
 
 /** A component used to display message using snack bar. */
 @Component({
@@ -33,7 +34,9 @@ export class MessageSnackBarComponent implements OnDestroy, OnInit {
       .pipe(
         takeUntil(this.componentDestroyed$),
         tap((message) =>
-          this.snackbar.open(message, SNACK_BAR_ACTION_TITLE, { duration: 2500 }),
+          this.snackbar.open(message, SNACK_BAR_ACTION_TITLE, {
+            duration: SNACK_BAR_DURATION,
+          }),
         ),
       )
       .subscribe();

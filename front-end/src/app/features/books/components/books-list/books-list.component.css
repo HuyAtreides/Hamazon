@@ -19,8 +19,6 @@
 .books-list {
   position: relative;
   min-height: 550px;
-  max-height: 1000px;
-  overflow: auto;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

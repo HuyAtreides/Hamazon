@@ -15,4 +15,11 @@ public interface CartRepo
 	 * @param username Username used to find cart items.
 	 */
 	List<CartItem> findAllByUsername(String username);
+
+	/**
+	 * Delete all cart items of a specific user.
+	 * 
+	 * @param username Username used to delete cart items.
+	 */
+	void deleteAllByUsername(String username);
 }

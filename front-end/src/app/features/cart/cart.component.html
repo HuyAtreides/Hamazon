@@ -1,0 +1,121 @@
+<ng-container *ngIf="cart$ | async as cart; else loading">
+  <ng-container *ngIf="cart.length > 0; else emptyCartPlaceholder">
+    <div class="shopping-cart">
+      <ng-container *ngIf="isLoading$ | async">
+        <div class="absolute-progress-bar-container">
+          <mat-progress-bar mode="query"></mat-progress-bar>
+        </div>
+
+        <div class="blur-background"></div>
+      </ng-container>
+
+      <h3 class="shopping-cart__header">Shopping Cart</h3>
+      <button
+        mat-flat-button
+        color="warn"
+        class="delete-all-button"
+        type="button"
+        (click)="handleDeleteAllCartItems()"
+      >
+        Delete all items
+      </button>
+      <p class="price-text">Price</p>
+      <mat-divider></mat-divider>
+      <ul class="cart-items">
+        <ng-container *ngFor="let cartItem of cart">
+          <li class="cart-item">
+            <ng-container *ngIf="loadingCartItemId$.value === cartItem.bookId">
+              <div class="absolute-spinner-container">
+                <mat-spinner color="primary"></mat-spinner>
+              </div>
+              <div class="blur-background"></div>
+            </ng-container>
+
+            <img
+              class="cart-item__cover-img"
+              [src]="cartItem.book.coverImgUrl"
+              alt="Book Cover Image"
+            />
+            <div class="cart-item__content item-info">
+              <h2 class="item-info__name">
+                <span>
+                  {{ cartItem.book.title }}
+                  <span class="item-info__published-year"
+                    >({{ cartItem.book.publicationDate | date: 'y' }})</span
+                  >
+                </span>
+                <span class="item-info__price">{{ cartItem.book.price | currency }}</span>
+              </h2>
+              <h3 class="item-info__creator">By {{ cartItem.book.authorName }}</h3>
+              <mat-chip-list>
+                <mat-chip *ngFor="let genre of cartItem.book.genres">
+                  {{ toGenreReadable(genre) }}
+                </mat-chip>
+              </mat-chip-list>
+              <br />
+              <mat-divider></mat-divider>
+              <div class="item-actions">
+                <app-cart-item-quantity
+                  [cartItem]="cartItem"
+                  [isDisabled]="isButtonDisabled$ | async"
+                  (updateAmount)="handleUpdateCartItemAmount($event)"
+                ></app-cart-item-quantity>
+                <span class="vertical-separator"></span>
+                <button
+                  mat-raised-button
+                  color="warn"
+                  type="button"
+                  [disabled]="isButtonDisabled$ | async"
+                  (click)="handleDeleteCartItem(cartItem.bookId)"
+                >
+                  Delete
+                </button>
+                <span class="vertical-separator"></span>
+                <a
+                  [routerLink]="['/books', cartItem.bookId]"
+                  mat-raised-button
+                  color="primary"
+                >
+                  Item Info
+                </a>
+              </div>
+            </div>
+          </li>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="proceed-to-checkout">
+      <p>
+        Total ({{ displayNumberOfItems(cart.length) }}):
+        <span class="total">{{ calculateTotalPrice(cart) | currency }}</span>
+      </p>
+      <a
+        routerLink="/checkout"
+        mat-raised-button
+        class="proceed-to-checkout__button"
+        color="accent"
+      >
+        Proceed To Checkout
+      </a>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyCartPlaceholder>
+    <div class="empty-cart-placeholder">
+      <p class="empty-cart-message">Your Shopping Cart Is Empty</p>
+      <p class="browsing-books-message">
+        Continue browsing books on the
+        <a routerLink="/books" class="browsing-books-link">Hamazon homepage.</a>
+      </p>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #loading>
+  <div class="center-spinner">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+</ng-template>
+
+<app-message-snack-bar [message$]="errorMessage$"></app-message-snack-bar>

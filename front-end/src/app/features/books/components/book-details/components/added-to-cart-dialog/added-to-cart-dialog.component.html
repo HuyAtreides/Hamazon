@@ -1,7 +1,7 @@
 <p mat-dialog-title class="message">
-  <mat-icon>check_circle</mat-icon> <span class="message-text">Added to Cart</span>
+  <mat-icon>check_circle</mat-icon> <span class="message-content">Added to Cart</span>
 </p>
 <div mat-dialog-actions>
-  <button mat-button (click)="handleCloseDialog()">Close</button>
-  <a mat-button routerLink="/cart" cdkFocusInitial>Go To Cart</a>
+  <button mat-button (click)="handleCloseDialog()" type="button">Close</button>
+  <button mat-button (click)="handleGoToCart()" cdkFocusInitial>Go To Cart</button>
 </div>

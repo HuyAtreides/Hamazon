@@ -46,7 +46,7 @@
     <button type="button" mat-raised-button color="warn" (click)="logout()">
       Logout
     </button>
-    <a routerLink="" mat-icon-button title="Shopping Cart">
+    <a routerLink="/cart" mat-icon-button title="Shopping Cart">
       <mat-icon [matBadge]="formatCartLength(cartLength$ | async)" matBadgeColor="accent">
         shopping_cart
       </mat-icon>

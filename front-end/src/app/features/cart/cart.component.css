@@ -1,0 +1,118 @@
+:host {
+  padding: 17px;
+  display: flex;
+  align-items: flex-start;
+  font-size: 1.3rem;
+  color: var(--light-contrast-color);
+  min-width: 1145px;
+}
+
+.center-spinner {
+  margin-top: 100px;
+}
+
+.shopping-cart {
+  padding: 30px;
+  width: 75%;
+  position: relative;
+  background-color: var(--secondary-background-color);
+}
+
+.item-info__published-year {
+  color: var(--faint-dark-color);
+}
+
+.item-info__creator {
+  margin: 3px;
+}
+
+.shopping-cart__header {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.price-text {
+  color: var(--faint-dark-color);
+  text-align: end;
+  margin-bottom: 5px;
+  font-size: 500;
+}
+
+.cart-item {
+  position: relative;
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.cart-items {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item__cover-img {
+  height: 180px;
+  margin-right: 25px;
+}
+
+.item-info__name {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-info__price {
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--contrast-color);
+}
+
+.empty-cart-placeholder {
+  width: 100%;
+  text-align: center;
+}
+
+.empty-cart-message {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin: 25px;
+  font-weight: bolder;
+  font-style: italic;
+  text-align: center;
+}
+
+.browsing-books-message {
+  font-style: italic;
+  text-align: center;
+  color: var(--faint-dark-color);
+}
+
+.browsing-books-link {
+  color: var(--secondary-contrast-color);
+}
+
+.item-info {
+  flex-grow: 1;
+}
+
+.item-actions {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.proceed-to-checkout {
+  padding: 15px;
+  background-color: var(--secondary-background-color);
+  flex-grow: 1;
+  margin-left: 30px;
+}
+
+.proceed-to-checkout__button {
+  width: 100%;
+}
+
+.total {
+  color: var(--contrast-color);
+  font-weight: 600;
+}

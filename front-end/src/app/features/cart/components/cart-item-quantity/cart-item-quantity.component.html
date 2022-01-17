@@ -1,0 +1,15 @@
+<mat-form-field class="cart-item-quantity">
+  <mat-label>Quantity</mat-label>
+  <input
+    matInput
+    type="number"
+    [formControl]="quantityControl$.value"
+    [errorStateMatcher]="errorStateMatcher"
+    [readonly]="isDisabled"
+  />
+  <mat-error>
+    <app-form-control-validation-message
+      [control]="quantityControl$.value"
+    ></app-form-control-validation-message>
+  </mat-error>
+</mat-form-field>

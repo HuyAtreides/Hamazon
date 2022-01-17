@@ -24,6 +24,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./features/books/books.module').then((m) => m.BooksModule),
       },
+      {
+        path: 'cart',
+        loadChildren: () =>
+          import('./features/cart/cart.module').then((m) => m.CartModule),
+      },
     ],
     canActivate: [AuthGuard],
   },

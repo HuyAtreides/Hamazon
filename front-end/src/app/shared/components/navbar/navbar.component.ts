@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { concat, Observable, of } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Book } from 'src/app/core/models/book';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BookService } from 'src/app/core/services/book.service';

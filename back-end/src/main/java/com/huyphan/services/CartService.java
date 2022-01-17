@@ -35,8 +35,7 @@ public class CartService {
 	 */
 	@Transactional
 	public List<CartItemDto> addNewCartItem(CartItemDto cartItemDto) throws AppException {
-		User user = authService.getCurrentAuthenticatedUser();
-		String username = user.getUsername();
+		String username = getCurrentUsername();
 		CartItem cartItem = cartItemMapper.fromDto(cartItemDto);
 		int bookId = cartItem.getBookId();
 		CartItemKey cartItemKey = new CartItemKey(bookId, username);
@@ -68,11 +67,9 @@ public class CartService {
 	 * @param updatedCartItem A cart item which has a new amount.
 	 */
 	@Transactional
-	public List<CartItemDto> updateCartItemAmount(CartItemDto updatedCartItemDto)
-			throws AppException {
+	public void updateCartItemAmount(CartItemDto updatedCartItemDto) throws AppException {
 		CartItem updatedCartItem = cartItemMapper.fromDto(updatedCartItemDto);
-		User user = authService.getCurrentAuthenticatedUser();
-		String username = user.getUsername();
+		String username = getCurrentUsername();
 		int bookId = updatedCartItem.getBookId();
 		CartItemKey cartItemKey = new CartItemKey(bookId, username);
 		Optional<CartItem> optionalCartItem = cartRepo.findById(cartItemKey);
@@ -80,17 +77,40 @@ public class CartService {
 				optionalCartItem.orElseThrow(() -> new AppException("Cart item not found."));
 
 		cartItem.setAmount(updatedCartItem.getAmount());
-		return getCart();
 	}
 
 	/** Get all cart items of the current user. */
 	@Transactional(readOnly = true)
 	public List<CartItemDto> getCart() {
-		User user = authService.getCurrentAuthenticatedUser();
-		String username = user.getUsername();
+		String username = getCurrentUsername();
 
 		List<CartItem> cartItems = cartRepo.findAllByUsername(username);
 		return cartItems.stream().map(item -> cartItemMapper.toDto(item))
 				.collect(Collectors.toList());
+	}
+
+	/** Delete all cart items of the current user. */
+	@Transactional
+	public void delete() {
+		String username = getCurrentUsername();
+		cartRepo.deleteAllByUsername(username);
+	}
+
+	/**
+	 * Delete a specific cart item.
+	 * 
+	 * @param itemId Id of the item to delete.
+	 */
+	@Transactional
+	public void delete(int itemId) {
+		String username = getCurrentUsername();
+		CartItemKey cartItemKey = new CartItemKey(itemId, username);
+		cartRepo.deleteById(cartItemKey);
+	}
+
+	/** Get username of the current authenticated user. */
+	private String getCurrentUsername() {
+		User user = authService.getCurrentAuthenticatedUser();
+		return user.getUsername();
 	}
 }

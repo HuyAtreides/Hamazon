@@ -15,9 +15,16 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import { BuyBoxComponent } from './components/book-details/components/buy-box/buy-box.component';
 import { AddedToCartDialogComponent } from './components/book-details/components/added-to-cart-dialog/added-to-cart-dialog.component';
 
-/** Contains components related to books feature. */
+/** Feature allows browsing list of books and view book details info. */
 @NgModule({
-  declarations: [BooksComponent, BooksSidebarComponent, BooksListComponent, BookDetailsComponent, BuyBoxComponent, AddedToCartDialogComponent],
+  declarations: [
+    BooksComponent,
+    BooksSidebarComponent,
+    BooksListComponent,
+    BookDetailsComponent,
+    BuyBoxComponent,
+    AddedToCartDialogComponent,
+  ],
   imports: [
     CommonModule,
     BooksRoutingModule,

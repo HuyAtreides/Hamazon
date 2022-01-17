@@ -5,7 +5,7 @@
 }
 
 .buy-box {
-  background-color: var(--secondary-text-color);
+  background-color: var(--secondary-background-color);
   display: flex;
   position: relative;
   flex-direction: column;
