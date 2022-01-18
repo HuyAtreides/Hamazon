@@ -16,13 +16,14 @@
         class="delete-all-button"
         type="button"
         (click)="handleDeleteAllCartItems()"
+        [disabled]="isButtonDisabled$ | async"
       >
         Delete all items
       </button>
       <p class="price-text">Price</p>
       <mat-divider></mat-divider>
       <ul class="cart-items">
-        <ng-container *ngFor="let cartItem of cart">
+        <ng-container *ngFor="let cartItem of cart; trackBy: trackCartItem">
           <li class="cart-item">
             <ng-container *ngIf="loadingCartItemId$.value === cartItem.bookId">
               <div class="absolute-spinner-container">

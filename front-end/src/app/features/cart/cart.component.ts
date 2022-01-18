@@ -127,4 +127,13 @@ export class CartComponent implements OnDestroy {
       0,
     );
   }
+
+  /**
+   * Function to track cart item in array.
+   * @param _ Idx.
+   * @param cartItem Item to track.
+   */
+  public trackCartItem(_: number, cartItem: CartItem): number {
+    return cartItem.bookId;
+  }
 }

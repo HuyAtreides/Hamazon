@@ -49,8 +49,9 @@ public class CartService {
 		return getCart();
 	}
 
+
 	@Transactional
-	public List<CartItemDto> addExistingCartItem(CartItemKey id, int addedAmount)
+	private List<CartItemDto> addExistingCartItem(CartItemKey id, int addedAmount)
 			throws AppException {
 		Optional<CartItem> optionalCartItem = cartRepo.findById(id);
 		CartItem cartItem =

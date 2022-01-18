@@ -48,9 +48,11 @@ export class CartItemQuantityComponent implements OnChanges, OnDestroy {
       .pipe(
         takeUntil(this.componentDestroyed$),
         switchMap((quantityControl) =>
-          listenControlChanges(quantityControl, undefined, 100),
+          listenControlChanges(quantityControl, undefined, 100).pipe(
+            /** Skip the initial value of the form control. */
+            skip(1),
+          ),
         ),
-        skip(1),
       )
       .subscribe((newAmount) => {
         this.updateAmount.emit({ ...this.cartItem, amount: newAmount as number });
@@ -62,7 +64,7 @@ export class CartItemQuantityComponent implements OnChanges, OnDestroy {
     if (changes.cartItem) {
       const { currentValue } = changes.cartItem;
       const { previousValue } = changes.cartItem;
-      if (currentValue !== previousValue) {
+      if (currentValue?.amount !== previousValue?.amount) {
         this.quantityControl$.next(this.instantiateQuantityControl(currentValue.amount));
       }
     }
