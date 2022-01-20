@@ -40,13 +40,17 @@
         ></app-form-control-validation-message>
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" class="submit-button">
-      <ng-container *ngIf="(isSubmitting$ | async) === false; else spinner">
-        Submit
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      class="submit-button"
+      [disabled]="isSubmitting$ | async"
+    >
+      <ng-container *ngIf="isSubmitting$ | async; else text">
+        <mat-spinner color="primary" [diameter]="33"></mat-spinner>
       </ng-container>
-      <ng-template #spinner>
-        <mat-spinner color="accent" [diameter]="33"></mat-spinner>
-      </ng-template>
+      <ng-template #text> Submit </ng-template>
     </button>
   </form>
   <p class="register">
