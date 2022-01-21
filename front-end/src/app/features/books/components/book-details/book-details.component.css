@@ -29,7 +29,7 @@
 }
 
 .book-author__name {
-  color: var(--secondary-contrast-color);
+  color: var(--link-color);
 }
 
 .book-description {
