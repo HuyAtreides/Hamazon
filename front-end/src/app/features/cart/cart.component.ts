@@ -1,16 +1,10 @@
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
-import {
-  filter,
-  finalize,
-  map,
-  shareReplay,
-  switchMapTo,
-  takeUntil,
-} from 'rxjs/operators';
+import { finalize, map, shareReplay, switchMapTo, takeUntil } from 'rxjs/operators';
 import { Genre } from 'src/app/core/enums/genre';
 import { CartItem } from 'src/app/core/models/cart-item';
 import { CartService } from 'src/app/core/services/cart.service';
+import { filterNull } from 'src/app/core/utils/filter-null';
 import { handleError } from 'src/app/core/utils/handle-error';
 
 /** Cart page. */
@@ -40,14 +34,7 @@ export class CartComponent implements OnDestroy {
   private readonly componentDestroyed$ = new Subject<void>();
 
   public constructor(private readonly cartService: CartService) {
-    this.cart$ = of(null).pipe(
-      switchMapTo(
-        this.cartService.cart$.pipe(
-          filter((value) => value != null),
-          map((value) => [...(value as NonNullable<readonly CartItem[]>)]),
-        ),
-      ),
-    );
+    this.cart$ = of(null).pipe(switchMapTo(this.cartService.cart$.pipe(filterNull())));
 
     this.isLoading$ = this.cartService.cart$.pipe(
       /** Display loading state for the whole cart only when we are getting cart from server and there is no loading cart item. */
