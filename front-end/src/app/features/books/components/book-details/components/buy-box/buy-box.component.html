@@ -1,4 +1,4 @@
-<form class="buy-box" [formGroup]="buyBoxControl" (ngSubmit)="handleAddNewCartItem()">
+<form class="buy-box" [formGroup]="buyBoxControl" (ngSubmit)="handleSubmit()">
   <div class="book-price">
     <p class="buy-new-text">Buy new:</p>
     <p class="price">{{ book.price | currency }}</p>

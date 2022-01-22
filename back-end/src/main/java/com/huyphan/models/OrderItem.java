@@ -19,7 +19,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "`Order`")
 public class OrderItem {
-	/** Uniquely identify a order item. */
+	/** Uniquely identify an order item. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
