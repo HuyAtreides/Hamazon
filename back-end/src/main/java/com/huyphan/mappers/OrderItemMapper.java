@@ -16,9 +16,6 @@ public class OrderItemMapper
 		implements FromDtoMapper<OrderItemDto, OrderItem>, ToDtoMapper<OrderItemDto, OrderItem> {
 
 	@Autowired
-	private ItemMapper itemMapper;
-
-	@Autowired
 	private ModelMapper modelMapper;
 
 	@Autowired
@@ -27,23 +24,23 @@ public class OrderItemMapper
 	@Override
 	public OrderItemDto toDto(OrderItem data) {
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-		itemMapper.createToDtoBaseTypeMap();
 
-		Converter<LocalDate, String> converter = (context) -> {
+
+		Converter<LocalDate, String> dateConverter = (context) -> {
 			LocalDate date = context.getSource();
 			return date.toString();
 		};
 
-		Converter<Book, BookDto> converter1 = (context) -> {
+		Converter<Book, BookDto> bookConverter = (context) -> {
 			Book book = context.getSource();
 			return bookMapper.toDto(book);
 		};
 
 
 		modelMapper.typeMap(OrderItem.class, OrderItemDto.class).addMappings(mapper -> {
-			mapper.using(converter1).map(OrderItem::getBook, OrderItemDto::setBook);
+			mapper.using(bookConverter).map(OrderItem::getBook, OrderItemDto::setBook);
 			mapper.map(OrderItem::getBookId, OrderItemDto::setBookId);
-			mapper.using(converter).map(OrderItem::getPlacedIn, OrderItemDto::setPlacedIn);
+			mapper.using(dateConverter).map(OrderItem::getPlacedIn, OrderItemDto::setPlacedIn);
 		});
 
 		return modelMapper.map(data, OrderItemDto.class);
@@ -52,22 +49,22 @@ public class OrderItemMapper
 	@Override
 	public OrderItem fromDto(OrderItemDto data) {
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-		itemMapper.createFromDtoBaseTypeMap();
 
-		Converter<BookDto, Book> converter1 = (context) -> {
+
+		Converter<BookDto, Book> Bookconverter = (context) -> {
 			BookDto bookDto = context.getSource();
 			return bookMapper.fromDto(bookDto);
 		};
 
-		Converter<String, LocalDate> converter = (context) -> {
+		Converter<String, LocalDate> dateConverter = (context) -> {
 			String date = context.getSource();
 			return LocalDate.parse(date);
 		};
 
 		modelMapper.typeMap(OrderItemDto.class, OrderItem.class).addMappings(mapper -> {
-			mapper.using(converter1).map(OrderItemDto::getBook, OrderItem::setBook);
+			mapper.using(Bookconverter).map(OrderItemDto::getBook, OrderItem::setBook);
 			mapper.map(OrderItemDto::getBookId, OrderItem::setBookId);
-			mapper.using(converter).map(OrderItemDto::getPlacedIn, OrderItem::setPlacedIn);
+			mapper.using(dateConverter).map(OrderItemDto::getPlacedIn, OrderItem::setPlacedIn);
 		});
 
 		return modelMapper.map(data, OrderItem.class);

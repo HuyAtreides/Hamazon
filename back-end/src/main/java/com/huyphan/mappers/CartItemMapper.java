@@ -1,12 +1,13 @@
 package com.huyphan.mappers;
 
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.huyphan.dtos.BookDto;
 import com.huyphan.dtos.CartItemDto;
-import com.huyphan.dtos.ItemDto;
+import com.huyphan.models.Book;
 import com.huyphan.models.CartItem;
-import com.huyphan.models.Item;
 
 
 @Component
@@ -16,16 +17,22 @@ public class CartItemMapper
 	private ModelMapper modelMapper;
 
 	@Autowired
-	private ItemMapper itemMapper;
+	private BookMapper bookMapper;
 
 	@Override
 	public CartItem fromDto(CartItemDto data) {
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-		itemMapper.createFromDtoBaseTypeMap();
 
-		modelMapper.typeMap(CartItemDto.class, CartItem.class).includeBase(ItemDto.class,
-				Item.class);
 
+		Converter<BookDto, Book> converter = (context) -> {
+			BookDto bookDto = context.getSource();
+			return bookMapper.fromDto(bookDto);
+		};
+
+		modelMapper.typeMap(CartItemDto.class, CartItem.class).addMappings(mapper -> {
+			mapper.using(converter).map(CartItemDto::getBook, CartItem::setBook);
+			mapper.map(CartItemDto::getBookId, CartItem::setBookId);
+		});
 		return modelMapper.map(data, CartItem.class);
 	}
 
@@ -33,10 +40,15 @@ public class CartItemMapper
 	public CartItemDto toDto(CartItem data) {
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 
-		itemMapper.createToDtoBaseTypeMap();
+		Converter<Book, BookDto> converter = (context) -> {
+			Book book = context.getSource();
+			return bookMapper.toDto(book);
+		};
 
-		modelMapper.typeMap(CartItem.class, CartItemDto.class).includeBase(Item.class,
-				ItemDto.class);
+		modelMapper.typeMap(CartItem.class, CartItemDto.class).addMappings(mapper -> {
+			mapper.using(converter).map(CartItem::getBook, CartItemDto::setBook);
+			mapper.map(CartItem::getBookId, CartItemDto::setBookId);
+		});
 
 		return modelMapper.map(data, CartItemDto.class);
 	}
