@@ -39,6 +39,7 @@
     class="add-to-cart-button"
     type="button"
     [disabled]="isLoading$ | async"
+    (click)="handleBuyNow()"
   >
     Buy Now
   </button>

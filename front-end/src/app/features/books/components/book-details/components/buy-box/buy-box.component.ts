@@ -1,9 +1,11 @@
 import { Component, ChangeDetectionStrategy, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { Book } from 'src/app/core/models/book';
+import { Item } from 'src/app/core/models/item';
 import { CartService } from 'src/app/core/services/cart.service';
 import { CustomErrorStateMatcher } from 'src/app/core/services/custom-error-state-matcher.service';
 import { handleError } from 'src/app/core/utils/handle-error';
@@ -41,6 +43,7 @@ export class BuyBoxComponent implements OnDestroy {
     public readonly errorStateMatcher: CustomErrorStateMatcher,
     private readonly cartService: CartService,
     private readonly dialog: MatDialog,
+    private readonly router: Router,
   ) {}
 
   /** @inheritdoc */
@@ -57,15 +60,39 @@ export class BuyBoxComponent implements OnDestroy {
     return this.book.price * quantity;
   }
 
+  /** Handle form submit. */
+  public handleSubmit(): void {
+    const addingNewCartItem$ = this.handleAddNewCartItem();
+
+    if (addingNewCartItem$) {
+      addingNewCartItem$.subscribe({
+        complete: () => this.dialog.open(AddedToCartDialogComponent),
+        error: (err) => handleError(err, this.errorMessage$),
+      });
+    }
+  }
+
+  /** Handle buy now. */
+  public handleBuyNow(): void {
+    const addingNewCartItem$ = this.handleAddNewCartItem();
+
+    if (addingNewCartItem$) {
+      addingNewCartItem$.subscribe({
+        complete: () => this.router.navigate(['/checkout']),
+        error: (err) => handleError(err, this.errorMessage$),
+      });
+    }
+  }
+
   /** Add new cart item. */
-  public handleAddNewCartItem(): void {
+  public handleAddNewCartItem(): null | Observable<readonly Item[]> {
     this.buyBoxControl.markAllAsTouched();
     if (!this.buyBoxControl.valid) {
-      return;
+      return null;
     }
     const amount = this.buyBoxControl.controls.quantity.value as number;
     this.isLoading$.next(true);
-    this.cartService
+    return this.cartService
       .addNewCartItem({
         bookId: this.book.id,
         amount,
@@ -74,10 +101,6 @@ export class BuyBoxComponent implements OnDestroy {
       .pipe(
         takeUntil(this.componentDestroyed$),
         finalize(() => this.isLoading$.next(false)),
-      )
-      .subscribe({
-        complete: () => this.dialog.open(AddedToCartDialogComponent),
-        error: (err) => handleError(err, this.errorMessage$),
-      });
+      );
   }
 }
