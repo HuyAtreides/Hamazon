@@ -17,17 +17,8 @@ export class CartService {
   /** Represents a user cart. */
   public readonly cart$: Observable<readonly CartItem[] | null>;
 
-  /** Add new cart url. */
-  private readonly addNewCartItemUrl: URL;
-
-  /** Get cart url. */
-  private readonly getCartUrl: URL;
-
-  /** Update cart item url. */
-  private readonly updateCartItemUrl: URL;
-
-  /** Delete all cart items url. */
-  private readonly deleteAllCartItemsUrl: URL;
+  /** Cart api url endpoint. */
+  private readonly cartUrl: URL;
 
   /** Emits value when ever cart changed. */
   private readonly cartChanged$ = new BehaviorSubject<void>(void 0);
@@ -37,10 +28,7 @@ export class CartService {
     private readonly http: HttpClient,
     private readonly cartItemMapper: CartItemMapperService,
   ) {
-    this.addNewCartItemUrl = new URL('cart/add', this.appConfig.apiUrl);
-    this.getCartUrl = new URL('cart', this.appConfig.apiUrl);
-    this.updateCartItemUrl = new URL('cart/update', this.appConfig.apiUrl);
-    this.deleteAllCartItemsUrl = new URL('cart/delete', this.appConfig.apiUrl);
+    this.cartUrl = new URL('cart', this.appConfig.apiUrl);
     this.cart$ = this.initCartStream();
   }
 
@@ -50,14 +38,12 @@ export class CartService {
   public addNewCartItem(cartItem: CartItem): Observable<readonly CartItem[]> {
     const body = this.cartItemMapper.toDto(cartItem);
 
-    return this.http
-      .post<readonly CartItemDto[]>(this.addNewCartItemUrl.toString(), body)
-      .pipe(
-        map((response) =>
-          response.map((cartItemDto) => this.cartItemMapper.fromDto(cartItemDto)),
-        ),
-        tap(() => this.cartChanged$.next()),
-      );
+    return this.http.post<readonly CartItemDto[]>(this.cartUrl.toString(), body).pipe(
+      map((response) =>
+        response.map((cartItemDto) => this.cartItemMapper.fromDto(cartItemDto)),
+      ),
+      tap(() => this.cartChanged$.next()),
+    );
   }
 
   /** Update cart item.
@@ -67,14 +53,14 @@ export class CartService {
     const body = this.cartItemMapper.toDto(updatedCartItem);
 
     return this.http
-      .put<void>(this.updateCartItemUrl.toString(), body)
+      .put<void>(this.cartUrl.toString(), body)
       .pipe(tap(() => this.cartChanged$.next()));
   }
 
   /** Delete all cart items. */
   public deleteAllCartItems(): Observable<void> {
     return this.http
-      .delete<void>(this.deleteAllCartItemsUrl.toString())
+      .delete<void>(this.cartUrl.toString())
       .pipe(tap(() => this.cartChanged$.next()));
   }
 
@@ -82,7 +68,7 @@ export class CartService {
    * @param id Id used to delete a specific item.
    */
   public deleteCartItem(id: number): Observable<void> {
-    const url = new URL(`cart/delete/${id}`, this.appConfig.apiUrl);
+    const url = new URL(`cart/${id}`, this.appConfig.apiUrl);
 
     return this.http
       .delete<void>(url.toString())
@@ -93,14 +79,14 @@ export class CartService {
   private initCartStream(): Observable<readonly CartItem[] | null> {
     return this.cartChanged$.pipe(
       switchMapTo(concat(of(null), this.getCart())),
-      shareReplay(1),
+      shareReplay({ refCount: true, bufferSize: 1 }),
     );
   }
 
   /** Get user cart. */
   private getCart(): Observable<readonly CartItem[]> {
     return this.http
-      .get<readonly CartItemDto[]>(this.getCartUrl.toString())
+      .get<readonly CartItemDto[]>(this.cartUrl.toString())
       .pipe(
         map((response) =>
           response.map((cartItemDto) => this.cartItemMapper.fromDto(cartItemDto)),

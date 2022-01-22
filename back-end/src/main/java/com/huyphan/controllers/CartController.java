@@ -30,7 +30,7 @@ public class CartController {
 	 * @param cartItemDto New cart item.
 	 * @throws AppException
 	 */
-	@PostMapping("/add")
+	@PostMapping
 	public List<CartItemDto> addNewCartItem(@RequestBody CartItemDto cartItemDto)
 			throws AppException {
 		return cartService.addNewCartItem(cartItemDto);
@@ -42,20 +42,31 @@ public class CartController {
 		return cartService.getCart();
 	}
 
+	/**
+	 * Update cart item.
+	 * 
+	 * @param updatedCartItemDto The updated cart item.
+	 */
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PutMapping("/update")
+	@PutMapping
 	public void updateCartItem(@RequestBody CartItemDto updatedCartItemDto) throws AppException {
 		cartService.updateCartItemAmount(updatedCartItemDto);
 	}
 
+	/** Delete all cart items. */
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("/delete")
+	@DeleteMapping
 	public void deleteCartItem() {
 		cartService.delete();
 	}
 
+	/**
+	 * Delete a specific cart item.
+	 * 
+	 * @param itemId Id of the item to be deleted.
+	 */
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("/delete/{itemId}")
+	@DeleteMapping("/{itemId}")
 	public void deleteCartItem(@PathVariable int itemId) {
 		cartService.delete(itemId);
 	}

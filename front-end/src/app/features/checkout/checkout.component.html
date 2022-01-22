@@ -1,0 +1,32 @@
+<mat-stepper linear #stepper>
+  <!-- Step-0 -->
+  <mat-step label="Shipping" [completed]="stepsStatus[0] | async" [editable]="false">
+    <section class="shipping-address-container">
+      <app-shipping-address
+        [shouldEmitEventAfterSave]="true"
+        (shippingAddressSaved)="moveToNextStep(0)"
+      ></app-shipping-address>
+    </section>
+  </mat-step>
+
+  <!-- Step-1 -->
+  <mat-step label="Review Order" [completed]="stepsStatus[1] | async" [editable]="false">
+    <section class="review-order-container">
+      <app-review-order (orderPlaced)="moveToNextStep(1)"></app-review-order>
+    </section>
+  </mat-step>
+
+  <!-- Step-2 -->
+  <mat-step label="Complete">
+    <div class="complete-container">
+      <h2 class="complete-message">
+        <mat-icon>check_circle</mat-icon>
+        <span>Thank you, your order has been placed.</span>
+      </h2>
+      <div class="buttons">
+        <a mat-raised-button routerLink="/books">Go To Homepage</a>
+        <a mat-raised-button routerLink="/books">Check Your Order</a>
+      </div>
+    </div>
+  </mat-step>
+</mat-stepper>

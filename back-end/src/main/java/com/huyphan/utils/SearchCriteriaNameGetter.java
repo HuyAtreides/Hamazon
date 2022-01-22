@@ -3,11 +3,10 @@ package com.huyphan.utils;
 import com.huyphan.models.enums.SearchCriteriaName;
 
 /**
- * Interface implemented by mappers or predicate constructors to provide search criteria name that
- * this mappers or predicate constructor belongs to.
+ * Interface implemented by mappers to provide search criteria name that this mappers belongs to.
  */
 public interface SearchCriteriaNameGetter {
 
-	/** Get search criteria name that this mapper or predicate constructor corresponds to. */
+	/** Get search criteria name that this mapper corresponds to. */
 	SearchCriteriaName getCriteriaName();
 }

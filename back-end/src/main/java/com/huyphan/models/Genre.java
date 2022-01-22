@@ -24,6 +24,7 @@ public class Genre {
 	private String value;
 
 	/** List of book that contains this genre. */
-	@ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY,
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Set<Book> books;
 }

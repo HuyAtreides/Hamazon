@@ -1,0 +1,114 @@
+<h2>Review Your Order</h2>
+<div class="main">
+  <div class="order-info">
+    <div class="order-info__shipping-address border">
+      <ng-container *ngIf="shippingAddress$ | async as shippingAddress; else loading">
+        <p class="shipping-address-header">Shipping Address</p>
+        <p class="shipping-address-info">
+          <span class="info-name">Fullname:</span> {{ shippingAddress.fullname }}
+        </p>
+        <p class="shipping-address-info">
+          <span class="info-name">Address:</span> {{ shippingAddress.address }}
+        </p>
+        <p class="shipping-address-info">
+          <span class="info-name">City:</span> {{ shippingAddress.city }}
+        </p>
+        <p class="shipping-address-info">
+          <span class="info-name">Country: </span> {{ shippingAddress.country }}
+        </p>
+        <p class="shipping-address-info">
+          <span class="info-name">Phone number: </span> {{ shippingAddress.phoneNumber }}
+        </p>
+        <p class="shipping-address-info" *ngIf="shippingAddress.note">
+          <span class="info-name">Note: </span> {{ shippingAddress.note }}
+        </p>
+      </ng-container>
+
+      <ng-template #loadingShippingAddress>
+        <div class="center-spinner">
+          <mat-spinner color="primary"></mat-spinner>
+        </div>
+      </ng-template>
+    </div>
+    <ul class="order-items"></ul>
+
+    <ul
+      class="order-items"
+      *ngIf="cartItems$ | async as cartItems; else loadingCartItems"
+    >
+      <li class="order-item border" *ngFor="let cartItem of cartItems">
+        <img class="order-item__cover-image" [src]="cartItem.book.coverImgUrl" />
+        <div class="order-item__content item">
+          <h2 class="item__name">{{ cartItem.book.title }}</h2>
+          <p class="item__creator item__info">By {{ cartItem.book.authorName }}</p>
+          <div class="genre">
+            <mat-chip-list>
+              <mat-chip *ngFor="let genre of cartItem.book.genres">
+                {{ toGenreReadable(genre) }}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+          <mat-divider></mat-divider>
+          <p class="item__price item__info price">{{ cartItem.book.price | currency }}</p>
+          <p class="item__quantity item__info">
+            Quantity: <span class="quantity">{{ cartItem.amount }}</span>
+            <a routerLink="/cart" class="change-quantity-link">Change</a>
+          </p>
+          <a
+            mat-flat-button
+            [routerLink]="['/books', cartItem.bookId]"
+            color="primary"
+            target="_blank"
+          >
+            Details
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="place-order border">
+    <ng-container *ngIf="cartItems$ | async as cartItems; else loading">
+      <button
+        mat-raised-button
+        color="warn"
+        type="button"
+        class="place-order__button"
+        [disabled]="isLoading$ | async"
+        (click)="handlePlaceOrder()"
+      >
+        <ng-container *ngIf="isLoading$ | async; else text">
+          <mat-spinner color="primary" [diameter]="30"></mat-spinner>
+        </ng-container>
+        <ng-template #text>Place your order</ng-template>
+      </button>
+      <p class="order-summary-header">Order Summary</p>
+      <p class="order-summary-content">
+        <span>items:</span>
+        <span>{{ cartItems.length }}</span>
+      </p>
+      <p class="order-summary-content">
+        <span>total:</span>
+        <span>{{ getOrderTotal(cartItems) | currency }}</span>
+      </p>
+      <mat-divider></mat-divider>
+      <p class="order-summary-content order-total price">
+        <span>Order Total:</span> <span>{{ getOrderTotal(cartItems) | currency }}</span>
+      </p>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="center-spinner">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+</ng-template>
+
+<ng-template #loadingCartItems>
+  <div class="center-spinner loading-cart-items">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+</ng-template>
+
+<app-message-snack-bar [message$]="errorMessage$"></app-message-snack-bar>

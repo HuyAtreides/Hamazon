@@ -16,6 +16,11 @@ const routes: Routes = [
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
   {
+    path: 'checkout',
+    loadChildren: () =>
+      import('./features/checkout/checkout.module').then((m) => m.CheckoutModule),
+  },
+  {
     path: '',
     component: NavbarHeaderComponent,
     children: [

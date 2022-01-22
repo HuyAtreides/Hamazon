@@ -5,7 +5,11 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -23,6 +27,12 @@ export class MessageSnackBarComponent implements OnDestroy, OnInit {
   @Input()
   public message$!: Observable<string>;
 
+  @Input()
+  private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+
+  @Input()
+  private verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
   /** Emits value when this component is destroyed. */
   private readonly componentDestroyed$ = new Subject<void>();
 
@@ -36,6 +46,8 @@ export class MessageSnackBarComponent implements OnDestroy, OnInit {
         tap((message) =>
           this.snackbar.open(message, SNACK_BAR_ACTION_TITLE, {
             duration: SNACK_BAR_DURATION,
+            verticalPosition: this.verticalPosition,
+            horizontalPosition: this.horizontalPosition,
           }),
         ),
       )

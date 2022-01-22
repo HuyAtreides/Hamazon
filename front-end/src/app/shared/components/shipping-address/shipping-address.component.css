@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+}
+
+.shipping-address-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.center-spinner {
+  margin-top: 150px;
+}
+
+.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

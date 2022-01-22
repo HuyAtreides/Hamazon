@@ -1,6 +1,8 @@
 package com.huyphan.models.enums;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.huyphan.models.AppException;
 
 /** From https://gist.github.com/evolkmann/740d24889c509c08484a8ff72af5dd64. */
 /** Country Codes ISO 3166 . */
@@ -264,6 +266,16 @@ public enum Country {
 	@JsonValue
 	public String getValue() {
 		return value;
+	}
+
+	/**
+	 * Converts string value to Country object.
+	 * 
+	 * @throws AppException
+	 */
+	static public Country toCountry(String value) throws AppException {
+		return Arrays.stream(Country.values()).filter(c -> c.getValue().equals(value)).findFirst()
+				.orElseThrow(() -> new AppException("Country doesn't exist."));
 	}
 
 }

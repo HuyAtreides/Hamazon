@@ -1,13 +1,4 @@
-import { Book } from './book';
+import { Item } from './item';
 
 /** Represents a cart item. */
-export interface CartItem {
-  /** Id of the book belongs to this cart. */
-  readonly bookId: number;
-
-  /** The amount of this cart item. */
-  readonly amount: number;
-
-  /** The book of this cart. */
-  readonly book: Book;
-}
+export type CartItem = Item;

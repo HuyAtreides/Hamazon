@@ -1,5 +1,4 @@
-/** From https://gist.github.com/evolkmann/740d24889c509c08484a8ff72af5dd64. */
-/** Country Codes ISO 3166 . */
+/** Country Codes ISO 3166. From https://gist.github.com/evolkmann/740d24889c509c08484a8ff72af5dd64. */
 export enum Country {
   AF = 'Afghanistan',
   AX = 'Aland Islands',

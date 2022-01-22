@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const EXPORTED_MODULE = [
   MatFormFieldModule,
@@ -40,6 +41,7 @@ const EXPORTED_MODULE = [
   MatAutocompleteModule,
   MatChipsModule,
   MatDialogModule,
+  MatStepperModule,
 ];
 
 /**
