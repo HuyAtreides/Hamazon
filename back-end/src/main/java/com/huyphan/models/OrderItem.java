@@ -45,4 +45,9 @@ public class OrderItem {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Book_Id", insertable = false, updatable = false)
 	private Book book;
+
+	/** Shipping address of this order item. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "Shipping_Address_Id")
+	private ShippingAddress shippingAddress;
 }

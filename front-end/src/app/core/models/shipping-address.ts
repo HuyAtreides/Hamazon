@@ -2,6 +2,9 @@ import { Country } from '../enums/country';
 
 /** Info required for order delivery. */
 export interface ShippingAddress {
+  /** Uniquely identify a shipping address. */
+  readonly id: number | null;
+
   /** User full name. */
   readonly fullname: string;
 

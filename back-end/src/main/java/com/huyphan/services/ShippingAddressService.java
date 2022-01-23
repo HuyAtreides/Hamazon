@@ -1,13 +1,14 @@
 package com.huyphan.services;
 
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.huyphan.dtos.ShippingAddressDto;
 import com.huyphan.mappers.ShippingAddressMapper;
 import com.huyphan.models.ShippingAddress;
+import com.huyphan.models.User;
 import com.huyphan.repositories.ShippingAddressRepo;
+import com.huyphan.repositories.UserRepo;
 
 /** Performs operations related to shipping address. */
 @Service
@@ -21,9 +22,11 @@ public class ShippingAddressService {
 	@Autowired
 	private AuthService authService;
 
+	@Autowired
+	private UserRepo userRepo;
+
 	/**
-	 * Save shipping address. Update if there is existing shipping address associates with the
-	 * current user, otherwise create new one.
+	 * Save shipping address.
 	 * 
 	 * @param shippingAddressDto Shipping address to save.
 	 */
@@ -31,20 +34,22 @@ public class ShippingAddressService {
 	public void saveShippingAddress(ShippingAddressDto shippingAddressDto) {
 		ShippingAddress shippingAddress = shippingAddressMapper.fromDto(shippingAddressDto);
 		String username = authService.getCurrentAuthenticatedUser().getUsername();
-		shippingAddress.setUsername(username);
-		shippingAddressRepo.save(shippingAddress);
+		User user = userRepo.findById(username).get();
+		ShippingAddress savedShippingAddress = shippingAddressRepo.save(shippingAddress);
+		user.setShippingAddress(savedShippingAddress);
 	}
 
 	/** Get shipping address of the current user. */
 	@Transactional(readOnly = true)
 	public ShippingAddressDto getShippingAddress() {
 		String username = authService.getCurrentAuthenticatedUser().getUsername();
-		Optional<ShippingAddress> shippingAddress = shippingAddressRepo.findById(username);
+		User user = userRepo.findById(username).get();
+		ShippingAddress shippingAddress = user.getShippingAddress();
 
-		if (shippingAddress.isEmpty()) {
+		if (shippingAddress == null) {
 			return null;
 		}
 
-		return shippingAddressMapper.toDto(shippingAddress.get());
+		return shippingAddressMapper.toDto(shippingAddress);
 	}
 }

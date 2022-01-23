@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -7,8 +8,16 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, EMPTY, Observable, Subject } from 'rxjs';
-import { finalize, first, map, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import {
+  finalize,
+  first,
+  map,
+  shareReplay,
+  startWith,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 import { Country } from 'src/app/core/enums/country';
 import { ShippingAddress } from 'src/app/core/models/shipping-address';
 import { CustomErrorStateMatcher } from 'src/app/core/services/custom-error-state-matcher.service';
@@ -44,6 +53,12 @@ export class ShippingAddressComponent implements OnDestroy {
   /** Whether we are waiting for response from server or not. */
   public readonly isLoading$ = new BehaviorSubject<boolean>(false);
 
+  /** Whether the form value changes is accepted. */
+  public readonly isNewAddressNotAccepted$: Observable<boolean>;
+
+  /** Whether the current address can be used. */
+  public readonly isCurrentAddressNotAccepted$: Observable<boolean>;
+
   /** Emit value when this component is destroyed. */
   private readonly componentDestroyed$ = new Subject<string>();
 
@@ -57,10 +72,17 @@ export class ShippingAddressComponent implements OnDestroy {
       map((shippingAddress) => this.initShippingAddressForm(shippingAddress)),
       shareReplay({ refCount: true, bufferSize: 1 }),
     );
+    this.isCurrentAddressNotAccepted$ = this.initIsCurrentAddressNotAcceptedStream();
+    this.isNewAddressNotAccepted$ = this.initIsNewAddressNotAcceptedStream();
+  }
+
+  /** Use current shipping address for the order. */
+  public useCurrentAddress(): void {
+    this.shippingAddressSaved.emit();
   }
 
   /** Handle shipping form submitted. */
-  public handleSubmit(): void {
+  public handleAddNewShippingAddress(): void {
     this.isLoading$.next(true);
     this.shippingAddressForm$
       .pipe(
@@ -69,7 +91,7 @@ export class ShippingAddressComponent implements OnDestroy {
         finalize(() => this.isLoading$.next(false)),
       )
       .subscribe({
-        next: () => {
+        complete: () => {
           if (this.shouldEmitEventAfterSave) {
             this.shippingAddressSaved.emit();
           } else {
@@ -90,6 +112,7 @@ export class ShippingAddressComponent implements OnDestroy {
    */
   private initShippingAddressForm(initialValue: ShippingAddress | null): FormGroup {
     return this.formBuilder.group({
+      id: [initialValue ? initialValue.id : null],
       fullname: [initialValue ? initialValue.fullname : '', Validators.required],
       address: [initialValue ? initialValue.address : '', Validators.required],
       country: [initialValue ? initialValue.country : Country.VN],
@@ -102,11 +125,35 @@ export class ShippingAddressComponent implements OnDestroy {
     });
   }
 
+  private initIsCurrentAddressNotAcceptedStream(): Observable<boolean> {
+    return this.shippingAddressService.shippingAddress$.pipe(
+      map((shippingAddress) => shippingAddress == null),
+    );
+  }
+
+  private initIsNewAddressNotAcceptedStream(): Observable<boolean> {
+    return this.shippingAddressForm$.pipe(
+      switchMap((form) =>
+        combineLatest([
+          form.valueChanges,
+          form.statusChanges,
+          this.shippingAddressService.shippingAddress$,
+          this.isLoading$,
+        ]),
+      ),
+      map(
+        ([formValue, formStatus, currentAddress, isLoading]) =>
+          /** New address is not accepted if it is like the current address or we are loading or the form is invalid. */
+          isEqual(formValue, currentAddress) || isLoading || formStatus === 'INVALID',
+      ),
+      startWith(true),
+    );
+  }
+
   private saveShippingAddress(form: FormGroup): Observable<void> {
-    form.markAllAsTouched();
-    if (form.invalid) {
-      return EMPTY;
-    }
-    return this.shippingAddressService.saveShippingAddress(form.value);
+    /** New shipping address should have null id so that the server can assign an auto-generate id for it. */
+    const newShippingAddress: ShippingAddress = { ...form.value, id: null };
+
+    return this.shippingAddressService.saveShippingAddress(newShippingAddress);
   }
 }

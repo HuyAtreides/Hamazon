@@ -19,6 +19,7 @@ export class ShippingAddressMapperService
   /** @inheritdoc */
   public fromDto(data: ShippingAddressDto): ShippingAddress {
     return {
+      id: data.id,
       fullname: data.fullname,
       address: data.address,
       note: data.note,
@@ -31,6 +32,7 @@ export class ShippingAddressMapperService
   /** @inheritdoc */
   public toDto(data: ShippingAddress): ShippingAddressDto {
     return {
+      id: data.id,
       fullname: data.fullname,
       address: data.address,
       note: data.note,

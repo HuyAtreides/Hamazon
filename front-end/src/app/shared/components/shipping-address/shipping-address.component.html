@@ -3,7 +3,7 @@
   <form
     class="shipping-address-form"
     [formGroup]="shippingAddressForm"
-    (submit)="handleSubmit()"
+    (submit)="handleAddNewShippingAddress()"
   >
     <mat-form-field appearance="outline">
       <mat-label>
@@ -90,15 +90,25 @@
     </mat-form-field>
     <button
       mat-raised-button
-      type="submit"
+      type="button"
       color="primary"
+      [disabled]="isCurrentAddressNotAccepted$ | async"
+      (click)="useCurrentAddress()"
+    >
+      Use current address
+    </button>
+
+    <button
+      mat-raised-button
+      type="submit"
+      color="accent"
       class="submit-button"
-      [disabled]="isLoading$ | async"
+      [disabled]="isNewAddressNotAccepted$ | async"
     >
       <ng-container *ngIf="isLoading$ | async; else text">
         <mat-spinner color="primary" [diameter]="30"></mat-spinner>
       </ng-container>
-      <ng-template #text> Use this address </ng-template>
+      <ng-template #text> Use new address </ng-template>
     </button>
   </form>
 </ng-container>

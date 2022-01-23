@@ -1,5 +1,8 @@
 /** Shipping address DTO. */
 export interface ShippingAddressDto {
+  /** Uniquely identify a shipping address. */
+  readonly id: number | null;
+
   /** User full name. */
   readonly fullname: string;
 

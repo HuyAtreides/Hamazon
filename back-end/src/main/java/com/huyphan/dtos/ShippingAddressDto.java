@@ -8,6 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ShippingAddressDto {
+	/** Uniquely identify a shipping address. */
+	private long id;
 
 	/** User full name. */
 	private String fullname;

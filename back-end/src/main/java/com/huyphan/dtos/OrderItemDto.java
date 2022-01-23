@@ -9,4 +9,7 @@ import lombok.Setter;
 public class OrderItemDto extends ItemDto {
 	/** Date in which this order item was placed. */
 	private String placedIn;
+
+	/** Shipping address of this order item. */
+	private ShippingAddressDto shippingAddress;
 }

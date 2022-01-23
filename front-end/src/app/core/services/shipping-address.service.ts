@@ -35,7 +35,7 @@ export class ShippingAddressService {
     );
   }
 
-  /** Save shipping address. Update if there is an existing shipping address associates with the current user, otherwise create new one.
+  /** Save shipping address.
    * @param shippingAddress The shipping address to save.*/
   public saveShippingAddress(shippingAddress: ShippingAddress): Observable<void> {
     const shippingAddressDto = this.shippingAddressMapper.toDto(shippingAddress);

@@ -2,6 +2,8 @@ package com.huyphan.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -13,10 +15,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "Shipping_Address")
 public class ShippingAddress {
-	/** Username of the user this shipping info belongs to. */
+	/** Uniquely identify a shipping address. */
 	@Id
-	@Column(name = "Username", nullable = false)
-	private String username;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Id")
+	private Long id;
 
 	/** User full name. */
 	@Column(name = "Fullname", nullable = false)
