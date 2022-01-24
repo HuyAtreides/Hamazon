@@ -20,7 +20,7 @@ import { RegisterDataMapperService } from './mappers/register-data-mapper.servic
 import { UserService } from './user.service';
 
 /**
- * Stateful service for handling the authorization requests.
+ * Service for handling the authorization requests.
  */
 @Injectable({
   providedIn: 'root',
