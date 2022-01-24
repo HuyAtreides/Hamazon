@@ -6,7 +6,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { finalize, first, switchMap, takeUntil } from 'rxjs/operators';
+import { finalize, first, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
 import { Genre } from 'src/app/core/enums/genre';
 import { CartItem } from 'src/app/core/models/cart-item';
 import { ShippingAddress } from 'src/app/core/models/shipping-address';
@@ -49,7 +49,9 @@ export class ReviewOrderComponent implements OnDestroy {
     private readonly orderService: OrderService,
   ) {
     this.cartItems$ = this.cartService.cart$;
-    this.shippingAddress$ = this.shippingAddressService.shippingAddress$;
+    this.shippingAddress$ = this.shippingAddressService
+      .getShippingAddress()
+      .pipe(shareReplay({ refCount: true, bufferSize: 1 }));
   }
 
   /** Calculate order total price.

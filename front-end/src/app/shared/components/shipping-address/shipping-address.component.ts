@@ -59,6 +59,9 @@ export class ShippingAddressComponent implements OnDestroy {
   /** Whether the current address can be used. */
   public readonly isCurrentAddressNotAccepted$: Observable<boolean>;
 
+  /** Shipping address of the current user. Null if the user hasn't provide shipping address. */
+  private readonly shippingAddress$: Observable<ShippingAddress | null>;
+
   /** Emit value when this component is destroyed. */
   private readonly componentDestroyed$ = new Subject<string>();
 
@@ -67,7 +70,10 @@ export class ShippingAddressComponent implements OnDestroy {
     private readonly shippingAddressService: ShippingAddressService,
     public readonly customErrorStateMatcher: CustomErrorStateMatcher,
   ) {
-    this.shippingAddressForm$ = this.shippingAddressService.shippingAddress$.pipe(
+    this.shippingAddress$ = this.shippingAddressService
+      .getShippingAddress()
+      .pipe(shareReplay({ refCount: true, bufferSize: 1 }));
+    this.shippingAddressForm$ = this.shippingAddress$.pipe(
       first(),
       map((shippingAddress) => this.initShippingAddressForm(shippingAddress)),
       shareReplay({ refCount: true, bufferSize: 1 }),
@@ -126,9 +132,7 @@ export class ShippingAddressComponent implements OnDestroy {
   }
 
   private initIsCurrentAddressNotAcceptedStream(): Observable<boolean> {
-    return this.shippingAddressService.shippingAddress$.pipe(
-      map((shippingAddress) => shippingAddress == null),
-    );
+    return this.shippingAddress$.pipe(map((shippingAddress) => shippingAddress == null));
   }
 
   private initIsNewAddressNotAcceptedStream(): Observable<boolean> {
@@ -137,7 +141,7 @@ export class ShippingAddressComponent implements OnDestroy {
         combineLatest([
           form.valueChanges,
           form.statusChanges,
-          this.shippingAddressService.shippingAddress$,
+          this.shippingAddress$,
           this.isLoading$,
         ]),
       ),

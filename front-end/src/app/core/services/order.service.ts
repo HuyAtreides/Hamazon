@@ -35,7 +35,7 @@ export class OrderService {
    * @param cartItems Order items to place.
    */
   public placeOrder(cartItems: readonly CartItem[]): Observable<readonly OrderItem[]> {
-    return this.shippingAddressService.shippingAddress$.pipe(
+    return this.shippingAddressService.getShippingAddress().pipe(
       filterNull(),
       first(),
       map((shippingAddress) => this.cartItemToOrderItemDto(cartItems, shippingAddress)),
