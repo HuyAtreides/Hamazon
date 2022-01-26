@@ -5,19 +5,19 @@
       <app-shipping-address
         [shouldEmitEventAfterSave]="true"
         (shippingAddressSaved)="moveToNextStep(0)"
-      ></app-shipping-address>
+      >
+      </app-shipping-address>
     </section>
   </mat-step>
 
   <!-- Step-1 -->
   <mat-step label="Review Order" [completed]="stepsStatus[1] | async" [editable]="false">
-    <section class="review-order-container">
-      <!-- Instantiate review order component after shipping step was completed so that we get the latest shipping address -->
-      <app-review-order
-        *ngIf="stepsStatus[0] | async"
-        (orderPlaced)="moveToNextStep(1)"
-      ></app-review-order>
-    </section>
+    <!-- Lazy load the review order step so that we get the latest shipping address -->
+    <ng-template matStepContent>
+      <section class="review-order-container">
+        <app-review-order (orderPlaced)="moveToNextStep(1)"></app-review-order>
+      </section>
+    </ng-template>
   </mat-step>
 
   <!-- Step-2 -->

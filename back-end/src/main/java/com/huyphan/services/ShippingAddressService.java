@@ -34,7 +34,7 @@ public class ShippingAddressService {
 	public void saveShippingAddress(ShippingAddressDto shippingAddressDto) {
 		ShippingAddress shippingAddress = shippingAddressMapper.fromDto(shippingAddressDto);
 		String username = authService.getCurrentAuthenticatedUser().getUsername();
-		User user = userRepo.findById(username).get();
+		User user = userRepo.findByUsername(username).get();
 		ShippingAddress savedShippingAddress = shippingAddressRepo.save(shippingAddress);
 		user.setShippingAddress(savedShippingAddress);
 	}
@@ -43,7 +43,7 @@ public class ShippingAddressService {
 	@Transactional(readOnly = true)
 	public ShippingAddressDto getShippingAddress() {
 		String username = authService.getCurrentAuthenticatedUser().getUsername();
-		User user = userRepo.findById(username).get();
+		User user = userRepo.findByUsername(username).get();
 		ShippingAddress shippingAddress = user.getShippingAddress();
 
 		if (shippingAddress == null) {

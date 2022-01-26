@@ -3,12 +3,15 @@ package com.huyphan.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.huyphan.dtos.AuthWrapperDto;
 import com.huyphan.dtos.LoginDataDto;
 import com.huyphan.dtos.RegisterDataDto;
 import com.huyphan.dtos.TokenDto;
+import com.huyphan.dtos.UpdateDataDto;
 import com.huyphan.dtos.UserDto;
 import com.huyphan.models.AppException;
 import com.huyphan.models.User;
@@ -61,6 +64,19 @@ public class AuthController {
 	@GetMapping("/user")
 	public UserDto getCurrentUser() {
 		return userService.getCurrentUser();
+	}
+
+	/**
+	 * Update user info.
+	 * 
+	 * @param authwrapperDto Auth wrapper contains updated user info.
+	 * @throws AppException
+	 */
+	@PutMapping("/user")
+	public TokenDto updateUserInfo(@RequestBody AuthWrapperDto<UpdateDataDto> authWrapperDto)
+			throws AppException {
+		User updatedUser = userService.updateUserInfo(authWrapperDto);
+		return jwtService.generateToken(updatedUser);
 	}
 
 	/**

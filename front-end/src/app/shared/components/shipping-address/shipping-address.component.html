@@ -88,27 +88,34 @@
       </mat-label>
       <textarea matInput formControlName="note"></textarea>
     </mat-form-field>
-    <button
-      mat-raised-button
-      type="button"
-      color="primary"
-      [disabled]="isCurrentAddressNotAccepted$ | async"
-      (click)="useCurrentAddress()"
-    >
-      Use current address
-    </button>
 
     <button
       mat-raised-button
       type="submit"
-      color="accent"
+      color="primary"
       class="submit-button"
       [disabled]="isNewAddressNotAccepted$ | async"
     >
       <ng-container *ngIf="isLoading$ | async; else text">
         <mat-spinner color="primary" [diameter]="30"></mat-spinner>
       </ng-container>
-      <ng-template #text> Use new address </ng-template>
+      <ng-template #text>
+        <ng-container *ngIf="shouldEmitEventAfterSave; else saveText">
+          Use new address
+        </ng-container>
+        <ng-template #saveText>Save Changes</ng-template>
+      </ng-template>
+    </button>
+
+    <button
+      mat-raised-button
+      type="button"
+      color="accent"
+      [disabled]="isCurrentAddressNotAccepted$ | async"
+      (click)="useCurrentAddress()"
+      *ngIf="shouldEmitEventAfterSave"
+    >
+      Use current address
     </button>
   </form>
 </ng-container>

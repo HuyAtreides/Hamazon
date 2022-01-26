@@ -16,7 +16,9 @@ import {
   shareReplay,
   startWith,
   switchMap,
+  switchMapTo,
   takeUntil,
+  tap,
 } from 'rxjs/operators';
 import { Country } from 'src/app/core/enums/country';
 import { ShippingAddress } from 'src/app/core/models/shipping-address';
@@ -24,6 +26,7 @@ import { CustomErrorStateMatcher } from 'src/app/core/services/custom-error-stat
 import { ShippingAddressService } from 'src/app/core/services/shipping-address.service';
 import { enumToArray } from 'src/app/core/utils/enum-to-array';
 import { handleError } from 'src/app/core/utils/handle-error';
+import { filterInvalidForm } from 'src/app/core/utils/filter-invalid-form';
 
 /** Component collects shipping address from user. */
 @Component({
@@ -35,7 +38,7 @@ import { handleError } from 'src/app/core/utils/handle-error';
 export class ShippingAddressComponent implements OnDestroy {
   /** Whether to emits an event after saving the shipping address. Usually be true when this component is used as a step in a stepper. The emitted event indicates that this step is completed.  */
   @Input()
-  public shouldEmitEventAfterSave!: boolean;
+  public shouldEmitEventAfterSave = false;
 
   /** Emit when shipping address was saved successfully and shouldEmitEventAfterSave property is true. */
   @Output()
@@ -65,14 +68,17 @@ export class ShippingAddressComponent implements OnDestroy {
   /** Emit value when this component is destroyed. */
   private readonly componentDestroyed$ = new Subject<string>();
 
+  private readonly shippingAddressChanged$ = new BehaviorSubject<void>(void 0);
+
   public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly shippingAddressService: ShippingAddressService,
     public readonly customErrorStateMatcher: CustomErrorStateMatcher,
   ) {
-    this.shippingAddress$ = this.shippingAddressService
-      .getShippingAddress()
-      .pipe(shareReplay({ refCount: true, bufferSize: 1 }));
+    this.shippingAddress$ = this.shippingAddressChanged$.pipe(
+      switchMapTo(this.shippingAddressService.getShippingAddress()),
+      shareReplay({ refCount: true, bufferSize: 1 }),
+    );
     this.shippingAddressForm$ = this.shippingAddress$.pipe(
       first(),
       map((shippingAddress) => this.initShippingAddressForm(shippingAddress)),
@@ -89,20 +95,22 @@ export class ShippingAddressComponent implements OnDestroy {
 
   /** Handle shipping form submitted. */
   public handleAddNewShippingAddress(): void {
-    this.isLoading$.next(true);
     this.shippingAddressForm$
       .pipe(
         takeUntil(this.componentDestroyed$),
+        filterInvalidForm(),
+        tap(() => this.isLoading$.next(true)),
         switchMap((form) => this.saveShippingAddress(form)),
         finalize(() => this.isLoading$.next(false)),
       )
       .subscribe({
-        complete: () => {
+        next: () => {
           if (this.shouldEmitEventAfterSave) {
             this.shippingAddressSaved.emit();
           } else {
             this.message$.next('Your shipping address has been saved!');
           }
+          this.shippingAddressChanged$.next();
         },
         error: (err) => handleError(err, this.message$),
       });
@@ -125,7 +133,7 @@ export class ShippingAddressComponent implements OnDestroy {
       city: [initialValue ? initialValue.city : '', Validators.required],
       phoneNumber: [
         initialValue ? initialValue.phoneNumber : '',
-        [Validators.required, Validators.pattern(/^[0-9]+$/)],
+        [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.maxLength(15)],
       ],
       note: [initialValue ? initialValue.note : ''],
     });
@@ -138,18 +146,15 @@ export class ShippingAddressComponent implements OnDestroy {
   private initIsNewAddressNotAcceptedStream(): Observable<boolean> {
     return this.shippingAddressForm$.pipe(
       switchMap((form) =>
-        combineLatest([
-          form.valueChanges,
-          form.statusChanges,
-          this.shippingAddress$,
-          this.isLoading$,
-        ]),
+        combineLatest([form.valueChanges, this.shippingAddress$, this.isLoading$]),
       ),
-      map(
-        ([formValue, formStatus, currentAddress, isLoading]) =>
-          /** New address is not accepted if it is like the current address or we are loading or the form is invalid. */
-          isEqual(formValue, currentAddress) || isLoading || formStatus === 'INVALID',
-      ),
+      map(([formValue, currentAddress, isLoading]) => {
+        const formValueWithNullId = { ...formValue, id: null };
+        const currentAddressWithNullId = { ...currentAddress, id: null };
+
+        /** New address is not accepted if it is like the current address or we are loading. */
+        return isEqual(formValueWithNullId, currentAddressWithNullId) || isLoading;
+      }),
       startWith(true),
     );
   }

@@ -5,9 +5,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.huyphan.dtos.LoginDataDto;
 import com.huyphan.mappers.LoginDataMapper;
+import com.huyphan.models.AppException;
 import com.huyphan.models.LoginData;
 import com.huyphan.models.User;
 
@@ -20,6 +22,10 @@ public class AuthService {
 
 	@Autowired
 	private LoginDataMapper loginDataMapper;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 
 	/**
 	 * Login.
@@ -44,5 +50,18 @@ public class AuthService {
 		User user = (User) authentication.getPrincipal();
 
 		return user;
+	}
+
+	/**
+	 * Verify user credential.
+	 * 
+	 * @param credential User credential to verify.
+	 */
+	public void verifyUserCredential(String credential) throws AppException {
+		User user = getCurrentAuthenticatedUser();
+
+		if (!passwordEncoder.matches(credential, user.getPassword())) {
+			throw new AppException("Current password is incorrect");
+		}
 	}
 }

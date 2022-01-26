@@ -1,15 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { concat, defer, Observable, of, race, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, map, shareReplay, switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+
+import { AuthWrapper } from '../models/auth-wrapper';
 
 import { Token } from '../models/token';
+import { UpdateData } from '../models/update-data';
 import { User } from '../models/user';
 
 import { AppConfigService } from './app-config.service';
+import { TokenDto } from './dtos/token-dto';
 import { UserDto } from './dtos/user-dto';
 import { LocalStorageService } from './local-storage.service';
+import { AuthWrapperMapperService } from './mappers/auth-wrapper-mapper.service';
+import { TokenMapperService } from './mappers/token-mapper.service';
+import { UpdateDataMapperService } from './mappers/update-data-mapper.service';
 import { UserMapperService } from './mappers/user-mapper.service';
 
 /**
@@ -35,8 +41,10 @@ export class UserService {
     private readonly appConfig: AppConfigService,
     private readonly userMapper: UserMapperService,
     private readonly http: HttpClient,
-    private readonly router: Router,
+    private readonly tokenMapper: TokenMapperService,
     private readonly localStorageService: LocalStorageService,
+    private readonly updateDataMapper: UpdateDataMapperService,
+    private readonly authWrapperMapper: AuthWrapperMapperService,
   ) {
     this.userUrl = new URL('auth/user', this.appConfig.apiUrl);
     this.currentToken$ = this.initTokenStream();
@@ -62,6 +70,21 @@ export class UserService {
   public saveToken(token: Token): void {
     this.localStorageService.saveItem<Token>('token', token);
     this.tokenChange$.next(token);
+  }
+
+  /** Update user info.
+   * @param authWrapper An auth wrapper contains updated user info.
+   */
+  public updateUserInfo(authWrapper: AuthWrapper<UpdateData>): Observable<Token> {
+    const authWrapperDto = this.authWrapperMapper.toDto(
+      authWrapper,
+      this.updateDataMapper,
+    );
+
+    return this.http.put<TokenDto>(this.userUrl.toString(), authWrapperDto).pipe(
+      map((tokenDto) => this.tokenMapper.fromDto(tokenDto)),
+      tap((token) => this.saveToken(token)),
+    );
   }
 
   /** Get token from local storage or tokenChange$. */

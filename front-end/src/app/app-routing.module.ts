@@ -34,6 +34,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./features/cart/cart.module').then((m) => m.CartModule),
       },
+      {
+        path: 'user',
+        loadChildren: () =>
+          import('./features/user/user.module').then((m) => m.UserModule),
+      },
     ],
     canActivate: [AuthGuard],
   },

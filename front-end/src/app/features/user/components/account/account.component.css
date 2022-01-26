@@ -1,8 +1,4 @@
-:host {
-  width: 100%;
-}
-
-.shipping-address-form {
+.form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -12,12 +8,7 @@
   font-weight: 500;
 }
 
-.center-spinner {
-  margin-top: 150px;
-}
-
 .submit-button {
-  margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: center;

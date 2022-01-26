@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -24,11 +26,15 @@ public class User implements UserDetails {
 
 	/** Username. */
 	@Id
-	@Column(name = "Username", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Id")
+	private Long id;
+
+	@Column(name = "Username", nullable = false, unique = true)
 	private String username;
 
 	/** User email. */
-	@Column(name = "Email", nullable = false)
+	@Column(name = "Email", nullable = false, unique = true)
 	private String email;
 
 	/** User password. */

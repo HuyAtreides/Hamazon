@@ -1,0 +1,83 @@
+<ng-container *ngIf="form$ | async as form">
+  <h2>Edit your account</h2>
+  <form class="form" [formGroup]="form" (ngSubmit)="handleSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>
+        <span class="form-label">Username</span>
+      </mat-label>
+      <input
+        type="text"
+        formControlName="username"
+        matInput
+        [errorStateMatcher]="customErrorStateMatcher"
+      />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="form.controls.username"
+        ></app-form-control-validation-message>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>
+        <span class="form-label">Email</span>
+      </mat-label>
+      <input
+        type="text"
+        formControlName="email"
+        matInput
+        [errorStateMatcher]="customErrorStateMatcher"
+      />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="form.controls.email"
+        ></app-form-control-validation-message>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>
+        <span class="form-label">New Password</span>
+      </mat-label>
+      <input
+        type="password"
+        formControlName="password"
+        matInput
+        [errorStateMatcher]="customErrorStateMatcher"
+      />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="form.controls.password"
+        ></app-form-control-validation-message>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>
+        <span class="form-label">Confirm New Password</span>
+      </mat-label>
+      <input
+        type="password"
+        formControlName="confirmPassword"
+        matInput
+        [errorStateMatcher]="customErrorStateMatcher"
+      />
+      <mat-error>
+        <app-form-control-validation-message
+          [control]="form.controls.confirmPassword"
+        ></app-form-control-validation-message>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      class="submit-button"
+      [disabled]="isNewInfoNotAccepted$ | async"
+    >
+      <ng-container *ngIf="isLoading$ | async; else text">
+        <mat-spinner color="primary" [diameter]="30"></mat-spinner>
+      </ng-container>
+      <ng-template #text>Save Changes</ng-template>
+    </button>
+  </form>
+</ng-container>
+<app-message-snack-bar [message$]="message$"></app-message-snack-bar>
