@@ -128,11 +128,12 @@ public class UserService implements UserDetailsService {
 		String currentEmail = user.getEmail();
 		String credential = authWrapper.getCredential();
 
-		if (updatedUsername != currentUsername && userRepo.existsByUsername(updatedUsername)) {
+		if (!updatedUsername.equals(currentUsername)
+				&& userRepo.existsByUsername(updatedUsername)) {
 			throw new AppException("Username is taken");
 		}
 
-		if (updatedEmail != currentEmail && userRepo.existsByEmail(updatedEmail)) {
+		if (!updatedEmail.equals(currentEmail) && userRepo.existsByEmail(updatedEmail)) {
 			throw new AppException("Email is taken");
 		}
 
