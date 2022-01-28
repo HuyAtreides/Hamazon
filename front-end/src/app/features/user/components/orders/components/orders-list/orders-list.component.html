@@ -4,7 +4,7 @@
     *ngIf="orders.length > 0; else emptyListPlaceholder"
     (appInfiniteScroll)="requestNextPage()"
   >
-    <li class="orders-list__item order" *ngFor="let order of orders">
+    <li class="orders-list__item order" *ngFor="let order of orders; trackBy: trackOrder">
       <div class="order__info border">
         <img class="order__info-cover-img" [src]="order.book.coverImgUrl" alt="" />
         <div class="order__info-content">
@@ -13,7 +13,7 @@
           <div class="genre">
             <mat-chip-list>
               <mat-chip *ngFor="let genre of order.book.genres">
-                {{ genre }}
+                {{ toReadableGenre(genre) }}
               </mat-chip>
             </mat-chip-list>
           </div>
