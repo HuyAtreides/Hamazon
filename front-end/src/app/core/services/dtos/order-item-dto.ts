@@ -8,6 +8,9 @@ export interface OrderItemDto extends CartItemDto {
    */
   readonly placedIn: string;
 
+  /** Uniquely identify an order. */
+  readonly id?: number;
+
   /** Shipping address of this order item. */
   readonly shippingAddress: ShippingAddressDto;
 }

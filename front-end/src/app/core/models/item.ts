@@ -11,6 +11,9 @@ export interface Item {
   /** The amount of this item. */
   readonly amount: number;
 
+  /** Uniquely identify an item. */
+  readonly id?: number;
+
   /** The book of this item. */
   readonly book: Book;
 }

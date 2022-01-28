@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { AppError } from '../../models/app-error';
+
 import { OrderItem } from '../../models/order-item';
 import { OrderItemDto } from '../dtos/order-item-dto';
 
@@ -23,10 +25,15 @@ export class OrderItemMapperService
 
   /** @inheritdoc */
   public fromDto(data: OrderItemDto): OrderItem {
+    if (!data.id) {
+      throw new AppError('Id is missing');
+    }
+
     return {
       ...this.itemMapper.fromDto(data),
       placedIn: new Date(data.placedIn),
       shippingAddress: this.shippingAddressMapper.fromDto(data.shippingAddress),
+      id: data.id,
     };
   }
 
