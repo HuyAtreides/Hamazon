@@ -2,14 +2,13 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { finalize, map, scan, share, startWith, switchMap, tap } from 'rxjs/operators';
+import { finalize, scan, share, switchMap, tap } from 'rxjs/operators';
 import { OrderPaginationOptions } from 'src/app/core/models/order-pagination-options';
 import { Page } from 'src/app/core/models/page';
 
 import { NestedFormErrorStateMatcher } from 'src/app/core/services/nested-form-error-state-matcher.service';
 import { OrderService } from 'src/app/core/services/order.service';
 import { CustomValidators } from 'src/app/core/utils/custom-validators';
-import { filterNull } from 'src/app/core/utils/filter-null';
 import { listenControlChanges } from 'src/app/core/utils/listen-control-changes';
 import { paginate } from 'src/app/core/utils/paginate';
 
@@ -45,7 +44,7 @@ export class OrdersComponent {
   public readonly isGettingPage$ = new BehaviorSubject<boolean>(true);
 
   /** Number of orders. */
-  public readonly numberOfOrders$: Observable<number>;
+  public readonly numberOfOrders$ = new BehaviorSubject<number>(0);
 
   /** Current page number. */
   private readonly currentPageNumber$ = new BehaviorSubject<number>(INITIAL_PAGE);
@@ -61,11 +60,6 @@ export class OrdersComponent {
     private readonly orderService: OrderService,
   ) {
     this.orders$ = this.initOrdersStream();
-    this.numberOfOrders$ = this.orders$.pipe(
-      filterNull(),
-      map((orders) => orders.length),
-      startWith(0),
-    );
   }
 
   /** Handle next page requested. */
@@ -126,6 +120,7 @@ export class OrdersComponent {
     this.isGettingPage$.next(true);
     return this.orderService.getOrders(options).pipe(
       tap((page) => this.haveNextPage$.next(!page.isLast)),
+      tap((page) => this.numberOfOrders$.next(page.total)),
       finalize(() => this.isGettingPage$.next(false)),
     );
   }
