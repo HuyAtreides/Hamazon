@@ -45,3 +45,13 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.border {
+  border: 1px solid var(--faint-color);
+  border-radius: 5px;
+}
+
+.price {
+  color: var(--contrast-color);
+  font-weight: 500;
+}

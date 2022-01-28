@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  width: 70%;
+  margin: auto;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-orders {
+  display: flex;
+  align-items: center;
+}
+
+.header {
+  font-size: 1.8rem;
+}
+
+.search-orders-by-date-range {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.orders-number {
+  margin-bottom: 0px;
+  font-size: medium;
+  margin-right: 10px;
+}

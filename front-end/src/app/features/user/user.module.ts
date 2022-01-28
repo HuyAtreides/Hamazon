@@ -10,10 +10,11 @@ import { UserComponent } from './user.component';
 import { AccountComponent } from './components/account/account.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { CurrentPasswordDialogComponent } from './components/account/components/current-password-dialog/current-password-dialog.component';
+import { OrdersListComponent } from './components/orders/components/orders-list/orders-list.component';
 
 /** Feature allows users to view and update their account info. */
 @NgModule({
-  declarations: [UserComponent, AccountComponent, OrdersComponent, CurrentPasswordDialogComponent],
+  declarations: [UserComponent, AccountComponent, OrdersComponent, CurrentPasswordDialogComponent, OrdersListComponent],
   imports: [CommonModule, UserRoutingModule, SharedModule, ReactiveFormsModule],
 })
 export class UserModule {}

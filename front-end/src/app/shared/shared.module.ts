@@ -12,6 +12,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SortPipe } from './pipes/sort.pipe';
 import { MessageSnackBarComponent } from './components/message-snack-bar/message-snack-bar.component';
 import { ShippingAddressComponent } from './components/shipping-address/shipping-address.component';
+import { ShippingAddressInfoComponent } from './components/shipping-address-info/shipping-address-info.component';
+import { InfiniteScrollDirective } from './directives/infinite-scroll.directive';
 
 const EXPORTED_DECLARATIONS = [
   FormControlValidationMessageComponent,
@@ -19,6 +21,7 @@ const EXPORTED_DECLARATIONS = [
   SortPipe,
   MessageSnackBarComponent,
   ShippingAddressComponent,
+  InfiniteScrollDirective,
 ];
 
 /**
@@ -26,7 +29,7 @@ const EXPORTED_DECLARATIONS = [
  * Contains reusable components, directives and modules can be shared through the whole app.
  */
 @NgModule({
-  declarations: [...EXPORTED_DECLARATIONS],
+  declarations: [...EXPORTED_DECLARATIONS, ShippingAddressInfoComponent],
   imports: [CommonModule, MaterialModule, RouterModule, ReactiveFormsModule],
   exports: [MaterialModule, ...EXPORTED_DECLARATIONS],
 })

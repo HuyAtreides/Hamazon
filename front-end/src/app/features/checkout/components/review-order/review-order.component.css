@@ -20,11 +20,6 @@
   margin-bottom: 5px;
 }
 
-.border {
-  border: 1px solid var(--faint-color);
-  border-radius: 5px;
-}
-
 .shipping-address-header {
   font-size: 1.3rem;
   font-weight: 500;
@@ -32,7 +27,6 @@
 
 .order-items {
   margin-top: 15px;
-  list-style: none;
   padding: 0;
 }
 
@@ -58,6 +52,7 @@
 
 .item__creator {
   color: var(--faint-dark-color);
+  margin-bottom: 0;
 }
 
 .item__quantity {
@@ -85,7 +80,7 @@
 .genre {
   width: 100%;
   margin-top: 7px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 .info-name {

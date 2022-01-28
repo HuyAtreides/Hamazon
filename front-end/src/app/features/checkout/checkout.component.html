@@ -1,7 +1,7 @@
 <mat-stepper linear #stepper>
   <!-- Step-0 -->
   <mat-step label="Shipping" [completed]="stepsStatus[0] | async" [editable]="false">
-    <section class="shipping-address-container">
+    <section>
       <app-shipping-address
         [shouldEmitEventAfterSave]="true"
         (shippingAddressSaved)="moveToNextStep(0)"
@@ -29,7 +29,7 @@
       </h2>
       <div class="buttons">
         <a mat-raised-button routerLink="/books">Go To Homepage</a>
-        <a mat-raised-button routerLink="/books">Check Your Order</a>
+        <a mat-raised-button routerLink="/user/orders">Check Your Order</a>
       </div>
     </div>
   </mat-step>

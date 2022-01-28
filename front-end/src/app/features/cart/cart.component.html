@@ -45,7 +45,9 @@
                     >({{ cartItem.book.publicationDate | date: 'y' }})</span
                   >
                 </span>
-                <span class="item-info__price">{{ cartItem.book.price | currency }}</span>
+                <span class="item-info__price price">
+                  {{ cartItem.book.price | currency }}
+                </span>
               </h2>
               <h3 class="item-info__creator">By {{ cartItem.book.authorName }}</h3>
               <mat-chip-list>
@@ -89,7 +91,7 @@
     <div class="proceed-to-checkout">
       <p>
         Total ({{ displayNumberOfItems(cart.length) }}):
-        <span class="total">{{ calculateTotalPrice(cart) | currency }}</span>
+        <span class="total price">{{ calculateTotalPrice(cart) | currency }}</span>
       </p>
       <a
         routerLink="/checkout"

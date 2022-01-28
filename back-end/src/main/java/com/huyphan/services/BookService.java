@@ -38,7 +38,7 @@ public class BookService {
 	private BookPaginationOptionsMapper paginationOptionsMapper;
 
 	@Autowired
-	private BookRepo bookDao;
+	private BookRepo bookRepo;
 
 	@Autowired
 	private BookMapper bookMapper;
@@ -64,9 +64,9 @@ public class BookService {
 		Direction direction = directionConverter.convertToDirection(orderDirection);
 		Sort sort = Sort.by(direction, paginationOptions.getOrderField().getValue());
 		Pageable pageable = PageRequest.of(page, pageSize, sort);
-		List<SearchCriteria> criteriaList = paginationOptions.getCriteria();
-		Specification<Book> spec = bookDao.getSpecification(criteriaList, constructorFactory);
-		Page<Book> pageResult = bookDao.findAll(spec, pageable);
+		List<SearchCriteria> criteria = paginationOptions.getCriteria();
+		Specification<Book> spec = bookRepo.getSpecification(criteria, constructorFactory);
+		Page<Book> pageResult = bookRepo.findAll(spec, pageable);
 		return pageMapper.toDto(pageResult, bookMapper);
 	}
 
@@ -78,7 +78,7 @@ public class BookService {
 	@Transactional(readOnly = true)
 	public List<BookDto> suggestBooks(String searchString) {
 		String pattern = "%" + searchString.toLowerCase() + "%";
-		List<Book> books = bookDao.findByPattern(pattern);
+		List<Book> books = bookRepo.findByPattern(pattern);
 		return books.stream().map(book -> bookMapper.toDto(book)).collect(Collectors.toList());
 	}
 
@@ -89,7 +89,7 @@ public class BookService {
 	 * @throws AppException
 	 */
 	public BookDto getBook(int id) throws AppException {
-		Optional<Book> optionalBook = bookDao.findById(id);
+		Optional<Book> optionalBook = bookRepo.findById(id);
 		if (optionalBook.isEmpty()) {
 			throw new AppException("Book not found");
 		}

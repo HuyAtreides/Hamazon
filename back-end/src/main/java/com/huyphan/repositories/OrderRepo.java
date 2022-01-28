@@ -1,12 +1,13 @@
 package com.huyphan.repositories;
 
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
-import com.huyphan.models.CartItemKey;
 import com.huyphan.models.OrderItem;
 
 /** Order repo. */
-public interface OrderRepo extends CrudRepository<OrderItem, CartItemKey> {
+public interface OrderRepo extends CrudRepository<OrderItem, Long>,
+		SearchSpecificationContructor<OrderItem>, JpaSpecificationExecutor<OrderItem> {
 	/**
 	 * Find all orders of a specific user.
 	 * 
