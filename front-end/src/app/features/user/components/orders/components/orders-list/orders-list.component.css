@@ -87,6 +87,10 @@
   color: var(--primary-color);
 }
 
+.first-page-spinner {
+  height: 450px;
+}
+
 .center-spinner {
-  margin-top: 90px;
+  margin-top: 15px;
 }
