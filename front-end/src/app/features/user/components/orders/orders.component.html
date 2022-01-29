@@ -1,74 +1,76 @@
-<div class="header-container">
-  <h2 class="header">Your Orders</h2>
+<div class="orders-container">
+  <div class="header-container">
+    <h2 class="header">Your Orders</h2>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Search all orders</mat-label>
-    <input
-      matInput
-      type="search"
-      placeholder="Enter book's title"
-      [formControl]="searchControl"
-    />
-    <button
-      mat-icon-button
-      matSuffix
-      title="Search Orders"
-      type="button"
-      (click)="handleSearchOrders()"
-    >
-      <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field>
-</div>
-<mat-divider></mat-divider>
-<div class="search-orders-by-date-range">
-  <p class="orders-number">
-    <strong>{{ numberOfOrders$ | async }} orders</strong> placed in
-  </p>
-  <mat-form-field appearance="standard">
-    <mat-label>Enter A Date Range</mat-label>
-    <mat-date-range-input [formGroup]="dateRangeControl" [rangePicker]="picker">
+    <mat-form-field appearance="outline">
+      <mat-label>Search all orders</mat-label>
       <input
-        matStartDate
-        formControlName="start"
-        placeholder="Start date"
-        [errorStateMatcher]="customErrorStateMatcher"
+        matInput
+        type="search"
+        placeholder="Enter book's title"
+        [formControl]="searchControl"
       />
-      <input
-        matEndDate
-        formControlName="end"
-        placeholder="End date"
-        [errorStateMatcher]="customErrorStateMatcher"
-      />
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-    <mat-error>
-      <app-form-control-validation-message
-        [control]="dateRangeControl.controls.start"
-        *ngIf="dateRangeControl.controls.start.invalid; else endDateInvalid"
-      ></app-form-control-validation-message>
-
-      <ng-template #endDateInvalid>
+      <button
+        mat-icon-button
+        matSuffix
+        title="Search Orders"
+        type="button"
+        (click)="handleSearchOrders()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="search-orders-by-date-range">
+    <p class="orders-number">
+      <strong>{{ numberOfOrders$ | async }} orders</strong> placed in
+    </p>
+    <mat-form-field appearance="standard">
+      <mat-label>Enter A Date Range</mat-label>
+      <mat-date-range-input [formGroup]="dateRangeControl" [rangePicker]="picker">
+        <input
+          matStartDate
+          formControlName="start"
+          placeholder="Start date"
+          [errorStateMatcher]="customErrorStateMatcher"
+        />
+        <input
+          matEndDate
+          formControlName="end"
+          placeholder="End date"
+          [errorStateMatcher]="customErrorStateMatcher"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-error>
         <app-form-control-validation-message
-          [control]="dateRangeControl.controls.end"
-          *ngIf="dateRangeControl.controls.end.invalid; else dateRangeInvalid"
+          [control]="dateRangeControl.controls.start"
+          *ngIf="dateRangeControl.controls.start.invalid; else endDateInvalid"
         ></app-form-control-validation-message>
-      </ng-template>
 
-      <ng-template #dateRangeInvalid>
-        <app-form-control-validation-message
-          [control]="dateRangeControl"
-        ></app-form-control-validation-message>
-      </ng-template>
-    </mat-error>
-  </mat-form-field>
+        <ng-template #endDateInvalid>
+          <app-form-control-validation-message
+            [control]="dateRangeControl.controls.end"
+            *ngIf="dateRangeControl.controls.end.invalid; else dateRangeInvalid"
+          ></app-form-control-validation-message>
+        </ng-template>
+
+        <ng-template #dateRangeInvalid>
+          <app-form-control-validation-message
+            [control]="dateRangeControl"
+          ></app-form-control-validation-message>
+        </ng-template>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <app-orders-list
+    [orders]="orders$ | async"
+    [isGettingPage]="isGettingPage$ | async"
+    (nextPageRequested)="handleNextPageRequested()"
+  ></app-orders-list>
 </div>
-
-<mat-divider></mat-divider>
-
-<app-orders-list
-  [orders]="orders$ | async"
-  [isGettingPage]="isGettingPage$ | async"
-  (nextPageRequested)="handleNextPageRequested()"
-></app-orders-list>

@@ -1,4 +1,4 @@
 <app-navbar></app-navbar>
-<main>
-  <router-outlet></router-outlet>
+<main [@slideIn]="routeDataService.get(outlet, 'page')">
+  <router-outlet #outlet="outlet"></router-outlet>
 </main>

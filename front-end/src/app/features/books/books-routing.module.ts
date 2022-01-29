@@ -13,10 +13,12 @@ const routes: Routes = [
       {
         path: ':id',
         component: BookDetailsComponent,
+        data: { page: 'bookDetails' },
       },
       {
         path: '',
         component: BooksListComponent,
+        data: { page: 'bookList' },
       },
     ],
   },

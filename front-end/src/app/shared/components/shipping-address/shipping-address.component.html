@@ -1,129 +1,131 @@
-<ng-container *ngIf="shippingAddressForm$ | async as shippingAddressForm; else loading">
-  <h2>Enter A Shipping Address</h2>
-  <form
-    class="shipping-address-form"
-    [formGroup]="shippingAddressForm"
-    (submit)="handleAddNewShippingAddress()"
-  >
-    <mat-form-field appearance="outline">
-      <mat-label>
-        <span class="form-label">Country/Region</span>
-      </mat-label>
-      <mat-select formControlName="country">
-        <mat-option *ngFor="let country of countries" [value]="country">
-          {{ country }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>
-        <span class="form-label">Full name (First name and Last name)</span>
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="fullname"
-        [errorStateMatcher]="customErrorStateMatcher"
-      />
-      <mat-error>
-        <app-form-control-validation-message
-          [control]="shippingAddressForm.controls.fullname"
-        ></app-form-control-validation-message>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>
-        <span class="form-label">Phone number</span>
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="phoneNumber"
-        [errorStateMatcher]="customErrorStateMatcher"
-      />
-      <mat-error>
-        <app-form-control-validation-message
-          [control]="shippingAddressForm.controls.phoneNumber"
-        ></app-form-control-validation-message>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>
-        <span class="form-label">City</span>
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="city"
-        [errorStateMatcher]="customErrorStateMatcher"
-      />
-      <mat-error>
-        <app-form-control-validation-message
-          [control]="shippingAddressForm.controls.city"
-        ></app-form-control-validation-message>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>
-        <span class="form-label">Address</span>
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="address"
-        [errorStateMatcher]="customErrorStateMatcher"
-      />
-      <mat-hint>
-        Street address, apartment, unit, floor, suite, building, district, etc.
-      </mat-hint>
-      <mat-error>
-        <app-form-control-validation-message
-          [control]="shippingAddressForm.controls.address"
-        ></app-form-control-validation-message>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>
-        <span class="form-label">Note</span>
-      </mat-label>
-      <textarea matInput formControlName="note"></textarea>
-    </mat-form-field>
-
-    <button
-      mat-raised-button
-      type="submit"
-      color="primary"
-      class="submit-button"
-      [disabled]="isNewAddressNotAccepted$ | async"
+<div class="shipping-address-container">
+  <ng-container *ngIf="shippingAddressForm$ | async as shippingAddressForm; else loading">
+    <h2>Enter A Shipping Address</h2>
+    <form
+      class="shipping-address-form"
+      [formGroup]="shippingAddressForm"
+      (submit)="handleAddNewShippingAddress()"
     >
-      <ng-container *ngIf="isLoading$ | async; else text">
-        <mat-spinner color="primary" [diameter]="30"></mat-spinner>
-      </ng-container>
-      <ng-template #text>
-        <ng-container *ngIf="shouldEmitEventAfterSave; else saveText">
-          Use new address
+      <mat-form-field appearance="outline">
+        <mat-label>
+          <span class="form-label">Country/Region</span>
+        </mat-label>
+        <mat-select formControlName="country">
+          <mat-option *ngFor="let country of countries" [value]="country">
+            {{ country }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>
+          <span class="form-label">Full name (First name and Last name)</span>
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="fullname"
+          [errorStateMatcher]="customErrorStateMatcher"
+        />
+        <mat-error>
+          <app-form-control-validation-message
+            [control]="shippingAddressForm.controls.fullname"
+          ></app-form-control-validation-message>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>
+          <span class="form-label">Phone number</span>
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="phoneNumber"
+          [errorStateMatcher]="customErrorStateMatcher"
+        />
+        <mat-error>
+          <app-form-control-validation-message
+            [control]="shippingAddressForm.controls.phoneNumber"
+          ></app-form-control-validation-message>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>
+          <span class="form-label">City</span>
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="city"
+          [errorStateMatcher]="customErrorStateMatcher"
+        />
+        <mat-error>
+          <app-form-control-validation-message
+            [control]="shippingAddressForm.controls.city"
+          ></app-form-control-validation-message>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>
+          <span class="form-label">Address</span>
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="address"
+          [errorStateMatcher]="customErrorStateMatcher"
+        />
+        <mat-hint>
+          Street address, apartment, unit, floor, suite, building, district, etc.
+        </mat-hint>
+        <mat-error>
+          <app-form-control-validation-message
+            [control]="shippingAddressForm.controls.address"
+          ></app-form-control-validation-message>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>
+          <span class="form-label">Note</span>
+        </mat-label>
+        <textarea matInput formControlName="note"></textarea>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        class="submit-button"
+        [disabled]="isNewAddressNotAccepted$ | async"
+      >
+        <ng-container *ngIf="isLoading$ | async; else text">
+          <mat-spinner color="primary" [diameter]="30"></mat-spinner>
         </ng-container>
-        <ng-template #saveText>Save Changes</ng-template>
-      </ng-template>
-    </button>
+        <ng-template #text>
+          <ng-container *ngIf="shouldEmitEventAfterSave; else saveText">
+            Use new address
+          </ng-container>
+          <ng-template #saveText>Save Changes</ng-template>
+        </ng-template>
+      </button>
 
-    <button
-      mat-raised-button
-      type="button"
-      color="accent"
-      [disabled]="isCurrentAddressNotAccepted$ | async"
-      (click)="useCurrentAddress()"
-      *ngIf="shouldEmitEventAfterSave"
-    >
-      Use current address
-    </button>
-  </form>
-</ng-container>
+      <button
+        mat-raised-button
+        type="button"
+        color="accent"
+        [disabled]="isCurrentAddressNotAccepted$ | async"
+        (click)="useCurrentAddress()"
+        *ngIf="shouldEmitEventAfterSave"
+      >
+        Use current address
+      </button>
+    </form>
+  </ng-container>
 
-<ng-template #loading>
-  <div class="center-spinner">
-    <mat-spinner color="primary"></mat-spinner>
-  </div>
-</ng-template>
+  <ng-template #loading>
+    <div class="center-spinner">
+      <mat-spinner color="primary"></mat-spinner>
+    </div>
+  </ng-template>
 
-<app-message-snack-bar [message$]="message$"></app-message-snack-bar>
+  <app-message-snack-bar [message$]="message$"></app-message-snack-bar>
+</div>

@@ -147,9 +147,12 @@ export class AccountComponent implements OnDestroy {
       .pipe(
         switchMap((form) =>
           form.controls.password.valueChanges.pipe(
-            filter((value) => value !== ''),
-            tap(() => {
-              form.controls.confirmPassword.addValidators(Validators.required);
+            tap((value) => {
+              if (value === '') {
+                form.controls.confirmPassword.removeValidators(Validators.required);
+              } else {
+                form.controls.confirmPassword.addValidators(Validators.required);
+              }
               form.controls.confirmPassword.updateValueAndValidity();
             }),
           ),

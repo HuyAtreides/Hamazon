@@ -20,14 +20,17 @@ const routes: Routes = [
       {
         path: 'account',
         component: AccountComponent,
+        data: { page: 'userAccount' },
       },
       {
         path: 'orders',
         component: OrdersComponent,
+        data: { page: 'userOrders' },
       },
       {
         path: 'shipping-address',
         component: ShippingAddressComponent,
+        data: { page: 'userShippingAddress' },
       },
     ],
   },

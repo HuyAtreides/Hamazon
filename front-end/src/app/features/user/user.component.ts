@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { slideInTrigger } from 'src/app/core/animations/slide-in';
+import { RouteDataService } from 'src/app/core/services/route-data.service';
 
 /** Name of tab. */
 enum Tab {
@@ -19,10 +21,13 @@ const TO_READABLE_MAP: Readonly<Record<Tab, string>> = {
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [slideInTrigger],
 })
 export class UserComponent {
   /** List of tabs. */
   public readonly tabs: Tab[] = [Tab.Account, Tab.Orders, Tab.ShippingAddress];
+
+  public constructor(public readonly routeDataService: RouteDataService<string>) {}
 
   /** Return readable tab name.
    * @param tab Current tab.

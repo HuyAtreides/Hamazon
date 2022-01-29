@@ -1,1 +1,3 @@
-<router-outlet></router-outlet>
+<section [@slideIn]="routeDataService.get(outlet, 'page')">
+  <router-outlet #outlet="outlet"></router-outlet>
+</section>

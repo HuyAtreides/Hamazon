@@ -1,7 +1,6 @@
-:host {
+.account-container {
   width: 50%;
   margin: auto;
-  display: block;
 }
 
 .form {

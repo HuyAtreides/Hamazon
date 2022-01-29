@@ -1,5 +1,4 @@
-:host {
-  display: block;
+.orders-container {
   width: 70%;
   min-width: 785px;
   margin: auto;

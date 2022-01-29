@@ -11,6 +11,6 @@
   </a>
 </nav>
 
-<main class="tab-content">
-  <router-outlet></router-outlet>
+<main class="tab-content" [@slideIn]="routeDataService.get(outlet, 'page')">
+  <router-outlet #outlet="outlet"></router-outlet>
 </main>

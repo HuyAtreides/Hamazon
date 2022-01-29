@@ -1,7 +1,6 @@
-:host {
+.shipping-address-container {
   width: 50%;
   margin: auto;
-  display: block;
 }
 
 .shipping-address-form {
