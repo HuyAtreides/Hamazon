@@ -1,35 +1,19 @@
 <h2>Review Your Order</h2>
 <div class="main">
   <div class="order-info">
-    <div class="order-info__shipping-address border">
-      <ng-container *ngIf="shippingAddress$ | async as shippingAddress; else loading">
-        <p class="shipping-address-header">Shipping Address</p>
-        <p class="shipping-address-info">
-          <span class="info-name">Fullname:</span> {{ shippingAddress.fullname }}
-        </p>
-        <p class="shipping-address-info">
-          <span class="info-name">Address:</span> {{ shippingAddress.address }}
-        </p>
-        <p class="shipping-address-info">
-          <span class="info-name">City:</span> {{ shippingAddress.city }}
-        </p>
-        <p class="shipping-address-info">
-          <span class="info-name">Country: </span> {{ shippingAddress.country }}
-        </p>
-        <p class="shipping-address-info">
-          <span class="info-name">Phone number: </span> {{ shippingAddress.phoneNumber }}
-        </p>
-        <p class="shipping-address-info" *ngIf="shippingAddress.note">
-          <span class="info-name">Note: </span> {{ shippingAddress.note }}
-        </p>
-      </ng-container>
+    <app-shipping-address-info
+      *ngIf="shippingAddress$ | async as shippingAddress; else loadingShippingAddress"
+      [shippingAddress]="shippingAddress"
+    ></app-shipping-address-info>
 
-      <ng-template #loadingShippingAddress>
+    <ng-template #loadingShippingAddress>
+      <div class="loading-shipping-address border">
         <div class="center-spinner">
           <mat-spinner color="primary"></mat-spinner>
         </div>
-      </ng-template>
-    </div>
+      </div>
+    </ng-template>
+
     <ul class="order-items"></ul>
 
     <ul

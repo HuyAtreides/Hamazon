@@ -43,27 +43,10 @@
         </div>
       </div>
 
-      <div class="order__shipping-address border">
-        <p class="shipping-address-header">Shipping Address</p>
-        <p class="shipping-address-info">
-          <span class="info-name">Fullname:</span> {{ order.shippingAddress.fullname }}
-        </p>
-        <p class="shipping-address-info">
-          <span class="info-name">Address:</span> {{ order.shippingAddress.address }}
-        </p>
-        <p class="shipping-address-info">
-          <span class="info-name">City:</span> {{ order.shippingAddress.city }}
-        </p>
-        <p class="shipping-address-info">
-          <span class="info-name">Country: </span> {{ order.shippingAddress.country }}
-        </p>
-        <p class="shipping-address-info">
-          <span class="info-name">Phone number: </span>
-          {{ order.shippingAddress.phoneNumber }}
-        </p>
-        <p class="shipping-address-info" *ngIf="order.shippingAddress.note">
-          <span class="info-name">Note: </span> {{ order.shippingAddress.note }}
-        </p>
+      <div class="order__shipping-address">
+        <app-shipping-address-info
+          [shippingAddress]="order.shippingAddress"
+        ></app-shipping-address-info>
       </div>
     </li>
 

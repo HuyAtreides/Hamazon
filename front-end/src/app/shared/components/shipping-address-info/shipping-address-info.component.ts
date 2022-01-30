@@ -6,12 +6,10 @@ import { ShippingAddress } from 'src/app/core/models/shipping-address';
   selector: 'app-shipping-address-info',
   templateUrl: './shipping-address-info.component.html',
   styleUrls: ['./shipping-address-info.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShippingAddressInfoComponent  {
-
+export class ShippingAddressInfoComponent {
   /** Shipping address to display. */
   @Input()
-  public shippingAddress!: ShippingAddress | null;
-
+  public shippingAddress!: ShippingAddress;
 }

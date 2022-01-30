@@ -1,0 +1,17 @@
+.info-name {
+  font-weight: 500;
+}
+
+.shipping-address {
+  position: relative;
+  padding: 15px;
+}
+
+.shipping-address__info {
+  margin-bottom: 5px;
+}
+
+.shipping-address__header {
+  font-size: 1.3rem;
+  font-weight: 500;
+}

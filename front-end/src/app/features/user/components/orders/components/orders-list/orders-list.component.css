@@ -13,22 +13,8 @@
 }
 
 .order__shipping-address {
-  padding: 15px;
   width: 30%;
   margin-right: 7px;
-}
-
-.shipping-address-info {
-  margin-bottom: 5px;
-}
-
-.shipping-address-header {
-  font-size: 1.3rem;
-  font-weight: 500;
-}
-
-.info-name {
-  font-weight: 500;
 }
 
 .order__info {

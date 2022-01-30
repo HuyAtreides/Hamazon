@@ -11,23 +11,14 @@
   width: 75%;
 }
 
-.order-info__shipping-address {
-  position: relative;
-  padding: 15px;
-}
-
-.shipping-address-info {
-  margin-bottom: 5px;
-}
-
-.shipping-address-header {
-  font-size: 1.3rem;
-  font-weight: 500;
-}
-
 .order-items {
   margin-top: 15px;
   padding: 0;
+}
+
+.loading-shipping-address {
+  position: relative;
+  padding: 15px;
 }
 
 .order-item {
@@ -81,10 +72,6 @@
   width: 100%;
   margin-top: 7px;
   margin-bottom: 7px;
-}
-
-.info-name {
-  font-weight: 500;
 }
 
 .quantity {
