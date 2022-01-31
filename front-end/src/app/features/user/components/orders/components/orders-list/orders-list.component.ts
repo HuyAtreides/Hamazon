@@ -5,7 +5,6 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { Genre } from 'src/app/core/enums/genre';
 import { OrderItem } from 'src/app/core/models/order-item';
 
 /** Component displays a list of orders. */
@@ -31,13 +30,6 @@ export class OrdersListComponent {
   /** Request next page. */
   public requestNextPage(): void {
     this.nextPageRequested.emit();
-  }
-
-  /** Convert Genre enum to string used for display.
-   * @param genre Genre enum to convert.
-   */
-  public toReadableGenre(genre: Genre): string {
-    return Genre.toReadable(genre);
   }
 
   /**

@@ -8,36 +8,11 @@
 
 .book-details-container {
   width: 75%;
-  display: flex;
-  align-items: flex-start;
-}
-
-.book-cover-img {
-  width: 35%;
-  min-width: 157px;
-  margin-left: 25px;
-  margin-right: 25px;
-}
-
-.book-details {
-  width: 100%;
-}
-
-.book-title {
-  margin: 0;
-  font-size: 2.2rem;
-}
-
-.book-author__name {
-  color: var(--link-color);
+  padding-left: 10px;
 }
 
 .book-description {
   line-height: 25px;
-}
-
-.date {
-  color: var(--faint-dark-color);
 }
 
 .book-info-container {

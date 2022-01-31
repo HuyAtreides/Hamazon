@@ -25,27 +25,8 @@
   margin-right: 10px;
 }
 
-.order__info-cover-img {
-  width: 130px;
-  margin-right: 25px;
-}
-
 .order__info-content {
   flex-grow: 1;
-}
-
-.product-title {
-  margin: 0px;
-}
-
-.product-creator {
-  color: var(--faint-dark-color);
-  margin-bottom: 0;
-}
-
-.genre {
-  margin-top: 7px;
-  margin-bottom: 7px;
 }
 
 .order-details {

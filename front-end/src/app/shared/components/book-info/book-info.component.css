@@ -1,0 +1,37 @@
+.book-info {
+  display: flex;
+  align-items: flex-start;
+}
+
+.book-info__cover-img {
+  margin-right: 20px;
+  margin-left: 5px;
+}
+
+.book-info__title {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-info__publication-date {
+  color: var(--faint-dark-color);
+}
+
+.book-info__author {
+  color: var(--faint-dark-color);
+  margin-bottom: 0;
+}
+
+.book-info__genre {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.projected_content {
+  margin-top: 10px;
+}
+
+.book-info__content {
+  flex-grow: 1;
+}

@@ -45,19 +45,13 @@ export class OrderService {
   /** Place order.
    * @param cartItems Cart items to place.
    */
-  public placeOrder(cartItems: readonly CartItem[]): Observable<readonly OrderItem[]> {
+  public placeOrder(cartItems: readonly CartItem[]): Observable<void> {
     return this.shippingAddressService.getShippingAddress().pipe(
       filterNull(),
       first(),
       map((shippingAddress) => this.cartItemToOrderItemDto(cartItems, shippingAddress)),
       switchMap((orderItemsDto) =>
-        this.http
-          .post<readonly OrderItemDto[]>(this.orderUrl.toString(), orderItemsDto)
-          .pipe(
-            map((response) =>
-              response.map((orderItemDto) => this.orderMapper.fromDto(orderItemDto)),
-            ),
-          ),
+        this.http.put<void>(this.orderUrl.toString(), orderItemsDto),
       ),
     );
   }

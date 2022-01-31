@@ -53,9 +53,8 @@ public class OrderService {
 	 * @param orderItemsDto All order items in the order.
 	 */
 	@Transactional
-	public List<OrderItemDto> placeOrder(List<OrderItemDto> orderItemsDto) {
+	public void placeOrder(List<OrderItemDto> orderItemsDto) {
 		String username = authService.getCurrentAuthenticatedUser().getUsername();
-
 
 		for (OrderItemDto orderItemDto : orderItemsDto) {
 			OrderItem orderItem = orderItemMapper.fromDto(orderItemDto);
@@ -63,8 +62,6 @@ public class OrderService {
 			cartService.delete(orderItem.getBookId());
 			orderRepo.save(orderItem);
 		}
-
-		return getOrderItems();
 	}
 
 	/** Get a page of order items of the current user based on the pagination options. */

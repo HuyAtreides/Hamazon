@@ -18,14 +18,6 @@
   background-color: var(--secondary-background-color);
 }
 
-.item-info__published-year {
-  color: var(--faint-dark-color);
-}
-
-.item-info__creator {
-  margin: 3px;
-}
-
 .shopping-cart__header {
   font-size: 2.2rem;
   margin-bottom: 10px;
@@ -49,20 +41,10 @@
   padding: 0;
 }
 
-.cart-item__cover-img {
-  height: 180px;
-  margin-right: 25px;
-}
-
-.item-info__name {
-  margin: 0;
-  display: flex;
-  justify-content: space-between;
-}
-
 .item-info__price {
   font-weight: 600;
   font-size: 1.5rem;
+  margin: 0;
 }
 
 .empty-cart-placeholder {

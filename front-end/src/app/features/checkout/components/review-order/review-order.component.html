@@ -21,18 +21,26 @@
       *ngIf="cartItems$ | async as cartItems; else loadingCartItems"
     >
       <li class="order-item border" *ngFor="let cartItem of cartItems">
-        <img class="order-item__cover-image" [src]="cartItem.book.coverImgUrl" />
-        <div class="order-item__content item">
-          <h2 class="item__name">{{ cartItem.book.title }}</h2>
-          <p class="item__creator">By {{ cartItem.book.authorName }}</p>
-          <div class="genre">
-            <mat-chip-list>
-              <mat-chip *ngFor="let genre of cartItem.book.genres">
-                {{ toGenreReadable(genre) }}
-              </mat-chip>
-            </mat-chip-list>
-          </div>
-          <mat-divider></mat-divider>
+        <div class="order-item__info item">
+          <app-book-info [book]="cartItem.book">
+            <p class="item__price item__info price">
+              {{ cartItem.book.price | currency }}
+            </p>
+            <p class="item__quantity item__info">
+              Quantity: <span class="quantity">{{ cartItem.amount }}</span>
+              <a routerLink="/cart" class="change-quantity-link">Change</a>
+            </p>
+            <a
+              mat-flat-button
+              [routerLink]="['/books', cartItem.bookId]"
+              color="primary"
+              target="_blank"
+            >
+              Details
+            </a>
+          </app-book-info>
+        </div>
+        <!-- <div class="order-item__content item">
           <p class="item__price item__info price">{{ cartItem.book.price | currency }}</p>
           <p class="item__quantity item__info">
             Quantity: <span class="quantity">{{ cartItem.amount }}</span>
@@ -46,7 +54,7 @@
           >
             Details
           </a>
-        </div>
+        </div> -->
       </li>
     </ul>
   </div>

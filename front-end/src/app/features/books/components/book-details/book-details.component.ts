@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { Genre } from 'src/app/core/enums/genre';
 import { Book } from 'src/app/core/models/book';
 import { BookService } from 'src/app/core/services/book.service';
 
@@ -27,12 +26,5 @@ export class BookDetailsComponent {
       catchError(() => this.router.navigate(['/books'])),
       map((value) => (typeof value !== 'boolean' ? value : null)),
     );
-  }
-
-  /** Convert Genre enum to string used for display.
-   * @param genre Genre enum to convert.
-   */
-  public toGenreReadable(genre: Genre): string {
-    return Genre.toReadable(genre);
   }
 }

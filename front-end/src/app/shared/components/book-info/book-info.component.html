@@ -1,1 +1,35 @@
-<p>book-info works!</p>
+<div class="book-info" [style.fontSize]="fontSize">
+  <img
+    class="book-info__cover-img"
+    [src]="book.coverImgUrl"
+    alt=""
+    [style.width]="coverImgWidth"
+  />
+  <div class="book-info__content">
+    <h2 class="book-info__title" [style.fontSize]="titleFontSize">
+      <span>
+        {{ book.title }}
+        <span class="book-info__publication-date">
+          ({{ book.publicationDate | date: 'y' }})
+        </span>
+      </span>
+      <ng-content select="[price]"></ng-content>
+    </h2>
+    <p class="book-info__author">
+      By <a [href]="book.authorInfoUrl" target="_blank">{{ book.authorName }}</a>
+    </p>
+    <div class="book-info__genre">
+      <mat-chip-list>
+        <mat-chip *ngFor="let genre of book.genres">
+          {{ toReadableGenre(genre) }}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="projected_content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

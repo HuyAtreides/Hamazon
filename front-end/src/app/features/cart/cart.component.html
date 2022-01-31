@@ -32,56 +32,35 @@
               <div class="blur-background"></div>
             </ng-container>
 
-            <img
-              class="cart-item__cover-img"
-              [src]="cartItem.book.coverImgUrl"
-              alt="Book Cover Image"
-            />
-            <div class="cart-item__content item-info">
-              <h2 class="item-info__name">
-                <span>
-                  {{ cartItem.book.title }}
-                  <span class="item-info__published-year"
-                    >({{ cartItem.book.publicationDate | date: 'y' }})</span
+            <div class="item-info">
+              <app-book-info [book]="cartItem.book">
+                <p class="price item-info__price" price>{{ cartItem.book.price | currency }}</p>
+                <div class="item-actions">
+                  <app-cart-item-quantity
+                    [cartItem]="cartItem"
+                    [isDisabled]="isButtonDisabled$ | async"
+                    (updateAmount)="handleUpdateCartItemAmount($event)"
+                  ></app-cart-item-quantity>
+                  <span class="vertical-separator"></span>
+                  <button
+                    mat-raised-button
+                    color="warn"
+                    type="button"
+                    [disabled]="isButtonDisabled$ | async"
+                    (click)="handleDeleteCartItem(cartItem.bookId)"
                   >
-                </span>
-                <span class="item-info__price price">
-                  {{ cartItem.book.price | currency }}
-                </span>
-              </h2>
-              <h3 class="item-info__creator">By {{ cartItem.book.authorName }}</h3>
-              <mat-chip-list>
-                <mat-chip *ngFor="let genre of cartItem.book.genres">
-                  {{ toGenreReadable(genre) }}
-                </mat-chip>
-              </mat-chip-list>
-              <br />
-              <mat-divider></mat-divider>
-              <div class="item-actions">
-                <app-cart-item-quantity
-                  [cartItem]="cartItem"
-                  [isDisabled]="isButtonDisabled$ | async"
-                  (updateAmount)="handleUpdateCartItemAmount($event)"
-                ></app-cart-item-quantity>
-                <span class="vertical-separator"></span>
-                <button
-                  mat-raised-button
-                  color="warn"
-                  type="button"
-                  [disabled]="isButtonDisabled$ | async"
-                  (click)="handleDeleteCartItem(cartItem.bookId)"
-                >
-                  Delete
-                </button>
-                <span class="vertical-separator"></span>
-                <a
-                  [routerLink]="['/books', cartItem.bookId]"
-                  mat-raised-button
-                  color="primary"
-                >
-                  Item Info
-                </a>
-              </div>
+                    Delete
+                  </button>
+                  <span class="vertical-separator"></span>
+                  <a
+                    [routerLink]="['/books', cartItem.bookId]"
+                    mat-raised-button
+                    color="primary"
+                  >
+                    Item Info
+                  </a>
+                </div>
+              </app-book-info>
             </div>
           </li>
           <mat-divider></mat-divider>

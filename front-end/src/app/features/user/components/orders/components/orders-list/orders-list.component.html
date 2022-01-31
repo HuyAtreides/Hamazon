@@ -6,40 +6,30 @@
   >
     <li class="orders-list__item order" *ngFor="let order of orders; trackBy: trackOrder">
       <div class="order__info border">
-        <img class="order__info-cover-img" [src]="order.book.coverImgUrl" alt="" />
         <div class="order__info-content">
-          <h2 class="product-title">{{ order.book.title }}</h2>
-          <p class="product-creator">By {{ order.book.authorName }}</p>
-          <div class="genre">
-            <mat-chip-list>
-              <mat-chip *ngFor="let genre of order.book.genres">
-                {{ toReadableGenre(genre) }}
-              </mat-chip>
-            </mat-chip-list>
-          </div>
-
-          <mat-divider></mat-divider>
-          <div class="order-details">
-            <p class="order-detail">
-              <span class="order-detail__name">Price: </span>
-              <span class="price order-detail__content">{{
-                order.book.price | currency
-              }}</span>
-            </p>
-            <p class="order-detail">
-              <span class="order-detail__name">Amount: </span>
-              <span class="order-detail__content">{{ order.amount }}</span>
-            </p>
-            <p class="order-detail">
-              <span class="order-detail__name">Order Placed: </span>
-              <span class="order-detail__content">{{
-                order.placedIn | date: 'longDate'
-              }}</span>
-            </p>
-          </div>
-          <a [routerLink]="['/books', order.book.id]" mat-flat-button color="primary">
-            Buy again
-          </a>
+          <app-book-info [book]="order.book">
+            <div class="order-details">
+              <p class="order-detail">
+                <span class="order-detail__name">Price: </span>
+                <span class="price order-detail__content">{{
+                  order.book.price | currency
+                }}</span>
+              </p>
+              <p class="order-detail">
+                <span class="order-detail__name">Amount: </span>
+                <span class="order-detail__content">{{ order.amount }}</span>
+              </p>
+              <p class="order-detail">
+                <span class="order-detail__name">Order Placed: </span>
+                <span class="order-detail__content">{{
+                  order.placedIn | date: 'longDate'
+                }}</span>
+              </p>
+            </div>
+            <a [routerLink]="['/books', order.book.id]" mat-flat-button color="primary">
+              Buy again
+            </a>
+          </app-book-info>
         </div>
       </div>
 

@@ -27,22 +27,11 @@
   display: flex;
 }
 
-.order-item__cover-image {
-  height: 185px;
-  margin-right: 25px;
-}
-
-.order-item__content {
+.order-item__info {
   flex-grow: 1;
-  align-items: flex-start;
 }
 
 .item__name {
-  margin-bottom: 0;
-}
-
-.item__creator {
-  color: var(--faint-dark-color);
   margin-bottom: 0;
 }
 
@@ -66,12 +55,6 @@
   font-weight: 500;
   margin-top: 5px;
   font-size: 1.7rem;
-}
-
-.genre {
-  width: 100%;
-  margin-top: 7px;
-  margin-bottom: 7px;
 }
 
 .quantity {
