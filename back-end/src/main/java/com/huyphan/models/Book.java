@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +22,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "Book")
+@NamedEntityGraph(name = "book-graph", attributeNodes = {@NamedAttributeNode(value = "author"),
+		@NamedAttributeNode(value = "genres")})
 public class Book {
 
 	/** Book ISBN. */

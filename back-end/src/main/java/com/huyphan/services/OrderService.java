@@ -1,7 +1,6 @@
 package com.huyphan.services;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -79,14 +78,6 @@ public class OrderService {
 		Page<OrderItem> pageResult = orderRepo.findAll(spec, PageRequest.of(page, pageSize));
 
 		return pageMapper.toDto(pageResult, orderItemMapper);
-	}
-
-	/** Get all order items of the current user. */
-	private List<OrderItemDto> getOrderItems() {
-		String username = authService.getCurrentAuthenticatedUser().getUsername();
-		List<OrderItem> orderItems = orderRepo.findAllByUsername(username);
-		return orderItems.stream().map(orderItem -> orderItemMapper.toDto(orderItem))
-				.collect(Collectors.toList());
 	}
 
 	private SearchCriteria createSearchByUsernameCriteria() {

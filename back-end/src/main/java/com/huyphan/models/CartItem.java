@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +20,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "Cart")
 @IdClass(CartItemKey.class)
+@NamedEntityGraph(name = "cart-item-graph",
+		attributeNodes = {@NamedAttributeNode(value = "book", subgraph = "book-subgraph")},
+		subgraphs = {@NamedSubgraph(name = "book-subgraph", attributeNodes = {
+				@NamedAttributeNode(value = "author"), @NamedAttributeNode(value = "genres")})})
 public class CartItem {
 
 	/** Book id of this item. */

@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +21,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "`Order`")
+@NamedEntityGraph(name = "order-item-graph",
+		attributeNodes = {@NamedAttributeNode(value = "book", subgraph = "book-subgraph"),
+				@NamedAttributeNode(value = "shippingAddress")},
+		subgraphs = {@NamedSubgraph(name = "book-subgraph", attributeNodes = {
+				@NamedAttributeNode(value = "author"), @NamedAttributeNode(value = "genres")})})
 public class OrderItem {
 	/** Uniquely identify an order item. */
 	@Id
