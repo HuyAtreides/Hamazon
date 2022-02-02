@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,8 +24,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "Book")
-@NamedEntityGraph(name = "book-graph", attributeNodes = {@NamedAttributeNode(value = "author"),
-		@NamedAttributeNode(value = "genres")})
+@NamedEntityGraph(name = "book-graph", attributeNodes = {@NamedAttributeNode(value = "author")})
 public class Book {
 
 	/** Book ISBN. */
@@ -70,7 +71,8 @@ public class Book {
 	private Author author;
 
 	/** Number of genres of this book. */
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "Book_Genre",
 			joinColumns = @JoinColumn(name = "Book_Id", referencedColumnName = "Id"),
 			inverseJoinColumns = @JoinColumn(name = "Genre", referencedColumnName = "Genre"))
