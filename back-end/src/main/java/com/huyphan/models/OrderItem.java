@@ -24,8 +24,8 @@ import lombok.Setter;
 @NamedEntityGraph(name = "order-item-graph",
 		attributeNodes = {@NamedAttributeNode(value = "book", subgraph = "book-subgraph"),
 				@NamedAttributeNode(value = "shippingAddress")},
-		subgraphs = {@NamedSubgraph(name = "book-subgraph", attributeNodes = {
-				@NamedAttributeNode(value = "author"), @NamedAttributeNode(value = "genres")})})
+		subgraphs = {@NamedSubgraph(name = "book-subgraph",
+				attributeNodes = {@NamedAttributeNode(value = "author")})})
 public class OrderItem {
 	/** Uniquely identify an order item. */
 	@Id

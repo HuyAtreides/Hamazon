@@ -22,8 +22,8 @@ import lombok.Setter;
 @IdClass(CartItemKey.class)
 @NamedEntityGraph(name = "cart-item-graph",
 		attributeNodes = {@NamedAttributeNode(value = "book", subgraph = "book-subgraph")},
-		subgraphs = {@NamedSubgraph(name = "book-subgraph", attributeNodes = {
-				@NamedAttributeNode(value = "author"), @NamedAttributeNode(value = "genres")})})
+		subgraphs = {@NamedSubgraph(name = "book-subgraph",
+				attributeNodes = {@NamedAttributeNode(value = "author")})})
 public class CartItem {
 
 	/** Book id of this item. */
