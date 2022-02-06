@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  back-end:
+    image: huyphangia/hamazon:back-end
+    restart: on-failure
+    depends_on:
+      - database
+    ports:
+      - 8080:8080
+  front-end:
+    image: huyphangia/hamazon:front-end
+    ports:
+      - 4200:4200
+  database:
+    image: huyphangia/hamazon:database
+    ports:
+      - 1433:1433
