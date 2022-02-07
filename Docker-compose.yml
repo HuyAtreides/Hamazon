@@ -13,5 +13,3 @@ services:
       - 4200:80
   database:
     image: huyphangia/hamazon:database
-    ports:
-      - 1433:1433
