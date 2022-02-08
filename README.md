@@ -4,7 +4,7 @@
 - Git CLI
 
 
-# Run App Locally
+# Run The Application Locally
 
 1. Clone the project and go to the folder
  ```
